@@ -10,12 +10,30 @@ import ast.VarDefinition;
 
 public class StructType extends NoPosASTNode implements Type {
 	private Set<RecordField> fields;
+	private String repeatedField;
 	
 	public StructType() {
 		this.fields = new HashSet<RecordField>();
+		this.repeatedField = null;
 	}
 	
 	public void addFields(List<VarDefinition> definitions) {
-		definitions.forEach(def -> this.fields.add(new RecordField(def.getName(), def.getType(), 0)));
+		if (this.repeatedField == null) {
+			
+			for (VarDefinition def : definitions) {
+				if (! this.fields.add(new RecordField(def.getName(), def.getType(), 0))) {
+					this.repeatedField = def.getName();
+					return;
+				}
+			}
+		}
+	}
+	
+	public Type getTypeOrError() {
+		if (this.repeatedField == null)
+			return this;
+		
+		else
+			return new ErrorType("Repeated field '" + this.repeatedField + "' in struct", getLine(), getColumn());
 	}
 }

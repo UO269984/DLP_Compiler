@@ -80,8 +80,9 @@ buitInType returns [Type ast]:
 		| 'double' {$ast = new DoubleType();}
 		| 'char' {$ast = new CharType();};
 
-struct returns [StructType ast = new StructType()]:
-		'struct' '{' (varDef {$ast.addFields($varDef.ast);})* '}';
+struct returns [Type ast]:
+		{StructType struct = new StructType();}
+		'struct' '{' (varDef {struct.addFields($varDef.ast);})* '}' {$ast = struct.getTypeOrError();};
 
 expresion returns [Expresion ast]:
 		INT_CONSTANT {$ast = new IntLiteral(LexerHelper.lexemeToInt($INT_CONSTANT.text), $INT_CONSTANT.getLine(), $INT_CONSTANT.getCharPositionInLine());}
