@@ -1,0 +1,1 @@
+java -jar lib\antlr-4.9.1-complete.jar -no-listener -package parser src\parser\Pmm.g4
