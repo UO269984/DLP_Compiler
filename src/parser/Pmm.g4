@@ -33,15 +33,15 @@ paramsDef returns [List<VarDefinition> ast = new ArrayList<VarDefinition>()]:
 		)?;
 
 funcDef returns [FuncDefinition ast]:
-		def='def' ID '(' paramsDef ')'
-		{$ast = new FuncDefinition($ID.text, $paramsDef.ast, $def.getLine(), $def.getCharPositionInLine());}
-		':' (buitInType {$ast.setType($buitInType.ast);})?
+		def='def' ID '(' paramsDef ')' {FuncType funcType = new FuncType($paramsDef.ast);}
+		':' (buitInType {funcType.setRetType($buitInType.ast);})?
+		{$ast = new FuncDefinition($ID.text, funcType, $def.getLine(), $def.getCharPositionInLine());}
 		'{' (varDef {$ast.addVarsDef($varDef.ast);})* (statement {$ast.addStatement($statement.ast);})* '}';
 
 mainDef returns [FuncDefinition ast]:
-		def='def' funcName='main' '(' paramsDef ')'
-		{$ast = new FuncDefinition($funcName.text, $paramsDef.ast, $def.getLine(), $def.getCharPositionInLine());}
-		':' (buitInType {$ast.setType($buitInType.ast);})?
+		def='def' funcName='main' '(' paramsDef ')' {FuncType funcType = new FuncType($paramsDef.ast);}
+		':' (buitInType {funcType.setRetType($buitInType.ast);})?
+		{$ast = new FuncDefinition($funcName.text, funcType, $def.getLine(), $def.getCharPositionInLine());}
 		'{' (varDef {$ast.addVarsDef($varDef.ast);})* (statement {$ast.addStatement($statement.ast);})* '}';
 
 statement returns [Statement ast]:

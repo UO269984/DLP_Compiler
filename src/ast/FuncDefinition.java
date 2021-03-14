@@ -7,13 +7,11 @@ import ast.types.VoidType;
 
 public class FuncDefinition extends AbstractDefinition implements Definition {
 	
-	private List<VarDefinition> params;
 	private List<VarDefinition> varDefinitions;
 	private List<Statement> statements;
 	
-	public FuncDefinition(String name, List<VarDefinition> params, int line, int column) {
-		super(name, new VoidType(), line, column);
-		this.params = params;
+	public FuncDefinition(String name, Type funcType, int line, int column) {
+		super(name, funcType, line, column);
 		this.varDefinitions = new LinkedList<VarDefinition>();
 		this.statements = new LinkedList<Statement>();
 	}

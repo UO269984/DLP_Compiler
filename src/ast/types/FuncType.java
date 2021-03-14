@@ -11,7 +11,12 @@ public class FuncType extends NoPosASTNode implements Type {
 	private List<VarDefinition> paramsTypes;
 	private Type retType;
 	
-	public FuncType() {
-		this.paramsTypes = new ArrayList<VarDefinition>();
+	public FuncType(List<VarDefinition> params) {
+		this.paramsTypes = params;
+		this.retType = new VoidType();
+	}
+	
+	public void setRetType(Type retType) {
+		this.retType = retType;
 	}
 }
