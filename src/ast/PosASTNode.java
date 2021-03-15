@@ -1,6 +1,6 @@
 package ast;
 
-public class PosASTNode implements ASTNode {
+public abstract class PosASTNode implements ASTNode {
 	private int line;
 	private int column;
 	

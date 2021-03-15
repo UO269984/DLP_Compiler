@@ -7,6 +7,7 @@ import java.util.HashSet;
 import ast.Type;
 import ast.NoPosASTNode;
 import ast.VarDefinition;
+import visitor.Visitor;
 
 public class StructType extends NoPosASTNode implements Type {
 	private Set<RecordField> fields;
@@ -35,5 +36,10 @@ public class StructType extends NoPosASTNode implements Type {
 		
 		else
 			return new ErrorType("Repeated field '" + this.repeatedField + "' in struct", getLine(), getColumn());
+	}
+	
+	@Override
+	public Object accept(Visitor visitor, Object param) {
+		return visitor.visit(this, param);
 	}
 }

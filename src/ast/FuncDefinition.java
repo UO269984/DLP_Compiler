@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.LinkedList;
 
 import ast.types.VoidType;
+import visitor.Visitor;
 
 public class FuncDefinition extends AbstractDefinition implements Definition {
 	
@@ -22,5 +23,10 @@ public class FuncDefinition extends AbstractDefinition implements Definition {
 	
 	public void addVarsDef(List<VarDefinition> varsDef) {
 		this.varDefinitions.addAll(varsDef);
+	}
+	
+	@Override
+	public Object accept(Visitor visitor, Object param) {
+		return visitor.visit(this, param);
 	}
 }

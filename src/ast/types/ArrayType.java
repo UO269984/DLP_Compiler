@@ -2,6 +2,7 @@ package ast.types;
 
 import ast.Type;
 import ast.NoPosASTNode;
+import visitor.Visitor;
 
 public class ArrayType extends NoPosASTNode implements Type {
 	private Type type;
@@ -13,5 +14,10 @@ public class ArrayType extends NoPosASTNode implements Type {
 		
 		this.type = type;
 		this.size = size;
+	}
+	
+	@Override
+	public Object accept(Visitor visitor, Object param) {
+		return visitor.visit(this, param);
 	}
 }

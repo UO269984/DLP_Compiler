@@ -3,7 +3,7 @@ package ast.expresions;
 import ast.PosASTNode;
 import ast.Expresion;
 
-public class BinaryExpresion extends PosASTNode implements Expresion {
+public abstract class BinaryExpresion extends PosASTNode implements Expresion {
 	private Expresion expresion1;
 	private Expresion expresion2;
 	

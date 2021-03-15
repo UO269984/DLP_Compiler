@@ -3,6 +3,7 @@ package ast.statements;
 import ast.PosASTNode;
 import ast.Statement;
 import ast.Expresion;
+import visitor.Visitor;
 
 public class VarAssigment extends PosASTNode implements Statement {
 	private Expresion toAsign;
@@ -12,5 +13,10 @@ public class VarAssigment extends PosASTNode implements Statement {
 		super(line, column);
 		this.toAsign = toAsign;
 		this.value = value;
+	}
+	
+	@Override
+	public Object accept(Visitor visitor, Object param) {
+		return visitor.visit(this, param);
 	}
 }

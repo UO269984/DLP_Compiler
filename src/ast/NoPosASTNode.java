@@ -1,6 +1,6 @@
 package ast;
 
-public class NoPosASTNode implements ASTNode {
+public abstract class NoPosASTNode implements ASTNode {
 	
 	@Override
 	public int getLine() {

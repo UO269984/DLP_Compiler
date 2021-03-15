@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 public class VarDefinition extends AbstractDefinition {
 	private int offset;
 	
@@ -9,5 +11,10 @@ public class VarDefinition extends AbstractDefinition {
 	
 	public VarDefinition(String name, Type type, int line, int column) {
 		super(name, type, line, column);
+	}
+	
+	@Override
+	public Object accept(Visitor visitor, Object param) {
+		return visitor.visit(this, param);
 	}
 }

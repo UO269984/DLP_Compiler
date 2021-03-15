@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import ast.Expresion;
 import ast.Statement;
+import visitor.Visitor;
 
 public class IfCond extends StatementWithExp {
 	private List<Statement> ifStatements;
@@ -18,5 +19,10 @@ public class IfCond extends StatementWithExp {
 	
 	public void setElseStatements(List<Statement> statements) {
 		this.elseStatements = statements;
+	}
+	
+	@Override
+	public Object accept(Visitor visitor, Object param) {
+		return visitor.visit(this, param);
 	}
 }

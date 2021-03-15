@@ -7,6 +7,7 @@ import ast.PosASTNode;
 import ast.Statement;
 import ast.Expresion;
 import ast.FuncDefinition;
+import visitor.Visitor;
 
 public class FuncCall extends PosASTNode implements Statement, Expresion {
 	private FuncDefinition function;
@@ -16,5 +17,10 @@ public class FuncCall extends PosASTNode implements Statement, Expresion {
 		super(line, column);
 		this.function = null;
 		this.parameters = parameters;
+	}
+	
+	@Override
+	public Object accept(Visitor visitor, Object param) {
+		return visitor.visit(this, param);
 	}
 }

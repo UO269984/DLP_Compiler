@@ -4,6 +4,9 @@ import org.antlr.v4.runtime.*;
 
 import ast.Program;
 import errorhandler.EH;
+import visitor.Visitor;
+import semantic.LValueVisitor;
+
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
 
@@ -23,6 +26,9 @@ public class Main {
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		PmmParser parser = new PmmParser(tokens);
 		Program ast = parser.program().ast;
+		
+		Visitor lvalueVisitor = new LValueVisitor();
+		ast.accept(lvalueVisitor, null);
 		
 		// * Check errors 
 		if(EH.getEH().hasErrors()) {

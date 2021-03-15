@@ -2,6 +2,7 @@ package ast;
 
 import java.util.List;
 import java.util.ArrayList;
+import visitor.Visitor;
 
 public class Program extends NoPosASTNode {
 	private List<Definition> definitions;
@@ -16,5 +17,10 @@ public class Program extends NoPosASTNode {
 	
 	public void addVarsDef(List<VarDefinition> newDefinitions) {
 		this.definitions.addAll(newDefinitions);
+	}
+	
+	@Override
+	public Object accept(Visitor visitor, Object param) {
+		return visitor.visit(this, param);
 	}
 }
