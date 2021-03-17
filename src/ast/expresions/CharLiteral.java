@@ -1,10 +1,8 @@
 package ast.expresions;
 
-import ast.PosASTNode;
-import ast.Expresion;
 import visitor.Visitor;
 
-public class CharLiteral extends PosASTNode implements Expresion {
+public class CharLiteral extends AbstractExpression {
 	private char character;
 	
 	public CharLiteral(char character, int line, int column) {

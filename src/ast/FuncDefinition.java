@@ -17,6 +17,14 @@ public class FuncDefinition extends AbstractDefinition implements Definition {
 		this.statements = new LinkedList<Statement>();
 	}
 	
+	public List<VarDefinition> getVarDefinitions() {
+		return this.varDefinitions;
+	}
+	
+	public List<Statement> getStatements() {
+		return this.statements;
+	}
+	
 	public void addStatement(Statement statement) {
 		this.statements.add(statement);
 	}

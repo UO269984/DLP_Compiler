@@ -1,10 +1,8 @@
 package ast.expresions;
 
-import ast.PosASTNode;
-import ast.Expresion;
 import visitor.Visitor;
 
-public class DoubleLiteral extends PosASTNode implements Expresion {
+public class DoubleLiteral extends AbstractExpression {
 	private double doubleNum;
 	
 	public DoubleLiteral(double doubleNum, int line, int column) {

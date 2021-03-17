@@ -1,9 +1,8 @@
 package ast.expresions;
 
-import ast.PosASTNode;
 import ast.Expresion;
 
-public abstract class BinaryExpresion extends PosASTNode implements Expresion {
+public abstract class BinaryExpresion extends AbstractExpression {
 	private Expresion expresion1;
 	private Expresion expresion2;
 	
@@ -11,5 +10,13 @@ public abstract class BinaryExpresion extends PosASTNode implements Expresion {
 		super(line, column);
 		this.expresion1 = expresion1;
 		this.expresion2 = expresion2;
+	}
+	
+	public Expresion getExpresion1() {
+		return this.expresion1;
+	}
+	
+	public Expresion getExpresion2() {
+		return this.expresion2;
 	}
 }

@@ -17,6 +17,14 @@ public class IfCond extends StatementWithExp {
 		this.elseStatements = new ArrayList<Statement>();
 	}
 	
+	public List<Statement> getIfStatements() {
+		return this.ifStatements;
+	}
+	
+	public List<Statement> getElseStatements() {
+		return this.elseStatements;
+	}
+	
 	public void setElseStatements(List<Statement> statements) {
 		this.elseStatements = statements;
 	}

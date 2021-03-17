@@ -1,18 +1,16 @@
 package ast.types;
 
 import ast.Type;
-import ast.NoPosASTNode;
 import visitor.Visitor;
 
-public class ArrayType extends NoPosASTNode implements Type {
-	private Type type;
+public class ArrayType extends ComposedType {
 	private int size;
 	
 	public ArrayType(Type type, int size) {
+		super(type);
 		if (size < 0)
 			throw new IllegalArgumentException("size negativo");
 		
-		this.type = type;
 		this.size = size;
 	}
 	

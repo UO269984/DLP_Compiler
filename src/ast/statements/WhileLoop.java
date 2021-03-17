@@ -15,6 +15,10 @@ public class WhileLoop extends StatementWithExp {
 		this.whileStatements = whileStatements;
 	}
 	
+	public List<Statement> getWhileStatements() {
+		return this.whileStatements;
+	}
+	
 	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);

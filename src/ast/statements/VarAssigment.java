@@ -15,6 +15,14 @@ public class VarAssigment extends PosASTNode implements Statement {
 		this.value = value;
 	}
 	
+	public Expresion getToAsign() {
+		return this.toAsign;
+	}
+	
+	public Expresion getValue() {
+		return this.value;
+	}
+	
 	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);

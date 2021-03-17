@@ -11,6 +11,10 @@ public class Program extends NoPosASTNode {
 		this.definitions = new ArrayList<Definition>();
 	}
 	
+	public List<Definition> getDefinitions() {
+		return this.definitions;
+	}
+	
 	public void add(Definition newDefinition) {
 		this.definitions.add(newDefinition);
 	}

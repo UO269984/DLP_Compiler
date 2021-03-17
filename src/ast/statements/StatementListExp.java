@@ -14,4 +14,8 @@ public abstract class StatementListExp extends PosASTNode implements Statement {
 		super(line, column);
 		this.expresions = expresions;
 	}
+	
+	public List<Expresion> getExpresions() {
+		return this.expresions;
+	}
 }
