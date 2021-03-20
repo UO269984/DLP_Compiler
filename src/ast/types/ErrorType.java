@@ -22,6 +22,7 @@ public class ErrorType extends PosASTNode implements Type {
 	
 	@Override
 	public String toString() {
-		return "Error - " + getLine() + ":" + getColumn() + " - " + this.message;
+		//Usamos la columna + 1 para que la priemra sea 1, en vez de 0
+		return "Error - " + getLine() + ":" + (getColumn() + 1) + " - " + this.message;
 	}
 }
