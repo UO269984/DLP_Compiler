@@ -31,7 +31,7 @@ public class Main {
 		ast.accept(lvalueVisitor, null);
 		
 		// * Check errors 
-		if(EH.getEH().hasErrors()) {
+		if (EH.getEH().hasErrors()) {
 			// * Show errors
 			EH.getEH().showErrors(System.err);
 		}

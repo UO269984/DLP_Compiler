@@ -15,6 +15,7 @@ public class LValueVisitor extends AbstractVisitor {
 	
 	private static final String LVALUE_ERROR_MSG = "Cannot assign value to ";
 	
+	//El valor por defecto del LValue en todos los nodos es false
 	@Override
 	public Object visit(Variable node, Object param) {
 		node.setLValue(true);
@@ -39,7 +40,7 @@ public class LValueVisitor extends AbstractVisitor {
 		
 		Expresion toAsign = node.getToAsign();
 		if (! toAsign.getLValue())
-			new ErrorType(LVALUE_ERROR_MSG + toAsign.getClass().getName(), toAsign.getLine(), toAsign.getColumn());
+			createLValueError(toAsign);
 		
 		return null;
 	}
@@ -50,9 +51,14 @@ public class LValueVisitor extends AbstractVisitor {
 		
 		for (Expresion exp : node.getExpresions()) {
 			if (! exp.getLValue())
-				new ErrorType(LVALUE_ERROR_MSG + exp.getClass().getName(), exp.getLine(), exp.getColumn());
+				createLValueError(exp);
 		}
 		
 		return null;
+	}
+	
+	private void createLValueError(Expresion exp) {
+		String[] expresionName = exp.getClass().getName().split("\\.");
+		new ErrorType(LVALUE_ERROR_MSG + expresionName[expresionName.length - 1], exp.getLine(), exp.getColumn());
 	}
 }
