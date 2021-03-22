@@ -6,6 +6,7 @@ import ast.Program;
 import errorhandler.EH;
 import visitor.Visitor;
 import semantic.LValueVisitor;
+import semantic.IdentificationVisitor;
 
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
@@ -27,8 +28,8 @@ public class Main {
 		PmmParser parser = new PmmParser(tokens);
 		Program ast = parser.program().ast;
 		
-		Visitor lvalueVisitor = new LValueVisitor();
-		ast.accept(lvalueVisitor, null);
+		runVisitor(new IdentificationVisitor(), ast);
+		runVisitor(new LValueVisitor(), ast);
 		
 		// * Check errors 
 		if (EH.getEH().hasErrors()) {
@@ -41,5 +42,9 @@ public class Main {
 			IntrospectorModel model = new IntrospectorModel("Program", ast);
 			new IntrospectorTree("Introspector", model);
 		}
+	}
+	
+	private static void runVisitor(Visitor visitor, Program program) {
+		program.accept(visitor, null);
 	}
 }

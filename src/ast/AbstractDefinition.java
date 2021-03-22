@@ -3,6 +3,7 @@ package ast;
 public abstract class AbstractDefinition extends PosASTNode implements Definition {
 	private String name;
 	private Type type;
+	private int scope;
 	
 	public AbstractDefinition(String name, Type type, int line, int column) {
 		super(line, column);
@@ -22,5 +23,15 @@ public abstract class AbstractDefinition extends PosASTNode implements Definitio
 	
 	public void setType(Type type) {
 		this.type = type;
+	}
+	
+	@Override
+	public int getScope() {
+		return this.scope;
+	}
+	
+	@Override
+	public void setScope(int scope) {
+		this.scope = scope;
 	}
 }
