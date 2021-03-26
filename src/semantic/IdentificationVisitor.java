@@ -8,6 +8,8 @@ import ast.Definition;
 import ast.VarDefinition;
 import ast.FuncDefinition;
 import ast.expresions.Variable;
+import ast.expresions.FuncCall;
+import ast.expresions.ExpressionWithDefinition;
 
 import ast.types.ErrorType;
 import errorhandler.EH;
@@ -17,13 +19,12 @@ public class IdentificationVisitor extends AbstractVisitor {
 	private SymbolTable symbolTable;
 	
 	public Object visit(Variable node, Object param) {
-		Definition def = this.symbolTable.find(node.getName());
-		if (def != null)
-			node.setDefinition(def);
-		
-		else
-			new ErrorType("Variable '" + node.getName() + "' not defined", node.getLine(), node.getColumn());
-		
+		checkDefined(node);
+		return super.visit(node, param);
+	}
+	
+	public Object visit(FuncCall node, Object param) {
+		checkDefined(node);
 		return super.visit(node, param);
 	}
 	
@@ -33,9 +34,9 @@ public class IdentificationVisitor extends AbstractVisitor {
 	}
 	
 	public Object visit(FuncDefinition node, Object param) {
+		addDefinition(node);
 		this.symbolTable.set();
 		
-		addDefinition(node);
 		Object toReturn = super.visit(node, param);
 		
 		this.symbolTable.reset();
@@ -49,6 +50,15 @@ public class IdentificationVisitor extends AbstractVisitor {
 	
 	public void addDefinition(Definition def) {
 		if (! this.symbolTable.insert(def))
-			new ErrorType("Symbol '" + def.getName() + "' already defined", def.getLine(), def.getColumn());
+			new ErrorType("'" + def.getName() + "' already defined", def.getLine(), def.getColumn());
+	}
+	
+	public void checkDefined(ExpressionWithDefinition exp) {
+		Definition def = this.symbolTable.find(exp.getName());
+		if (def != null)
+			exp.setDefinition(def);
+		
+		else
+			new ErrorType("'" + exp.getName() + "' not defined", exp.getLine(), exp.getColumn());
 	}
 }

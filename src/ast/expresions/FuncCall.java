@@ -8,12 +8,12 @@ import ast.Expresion;
 import ast.FuncDefinition;
 import visitor.Visitor;
 
-public class FuncCall extends AbstractExpression implements Statement {
+public class FuncCall extends ExpressionWithDefinition implements Statement {
 	private FuncDefinition function;
 	private List<Expresion> parameters;
 	
-	public FuncCall(List<Expresion> parameters, int line, int column) {
-		super(line, column);
+	public FuncCall(String name, List<Expresion> parameters, int line, int column) {
+		super(name, line, column);
 		this.function = null;
 		this.parameters = parameters;
 	}

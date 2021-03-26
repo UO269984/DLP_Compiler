@@ -1506,7 +1506,7 @@ public class PmmParser extends Parser {
 			((FuncCallContext)_localctx).funcCallParams = funcCallParams();
 			setState(328);
 			match(T__5);
-			((FuncCallContext)_localctx).ast =  new FuncCall(((FuncCallContext)_localctx).funcCallParams.ast, ((FuncCallContext)_localctx).ID.getLine(), ((FuncCallContext)_localctx).ID.getCharPositionInLine());
+			((FuncCallContext)_localctx).ast =  new FuncCall((((FuncCallContext)_localctx).ID!=null?((FuncCallContext)_localctx).ID.getText():null), ((FuncCallContext)_localctx).funcCallParams.ast, ((FuncCallContext)_localctx).ID.getLine(), ((FuncCallContext)_localctx).ID.getCharPositionInLine());
 			}
 		}
 		catch (RecognitionException re) {

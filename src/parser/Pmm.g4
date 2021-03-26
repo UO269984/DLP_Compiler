@@ -102,7 +102,7 @@ expresion returns [Expresion ast]:
 		| exp1=expresion operand=('&&' | '||') exp2=expresion {$ast = new Comparison($exp1.ast, $exp2.ast, $operand.text, $exp1.ast.getLine(), $exp1.ast.getColumn());};
 
 funcCall returns [FuncCall ast]:
-		ID '(' funcCallParams ')' {$ast = new FuncCall($funcCallParams.ast, $ID.getLine(), $ID.getCharPositionInLine());};
+		ID '(' funcCallParams ')' {$ast = new FuncCall($ID.text, $funcCallParams.ast, $ID.getLine(), $ID.getCharPositionInLine());};
 
 funcCallParams returns [List<Expresion> ast = new ArrayList<Expresion>()]:
 		(expresionList {$ast = $expresionList.ast;})?;

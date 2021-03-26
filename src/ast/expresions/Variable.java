@@ -1,23 +1,11 @@
 package ast.expresions;
 
-import ast.Definition;
 import visitor.Visitor;
 
-public class Variable extends AbstractExpression {
-	private String name;
-	private Definition definition;
+public class Variable extends ExpressionWithDefinition {
 	
 	public Variable(String name, int line, int column) {
-		super(line, column);
-		this.name = name;
-	}
-	
-	public String getName() {
-		return this.name;
-	}
-	
-	public void setDefinition(Definition definition) {
-		this.definition = definition;
+		super(name, line, column);
 	}
 	
 	@Override
