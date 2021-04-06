@@ -1089,7 +1089,7 @@ public class PmmParser extends Parser {
 				{
 				setState(235);
 				match(T__18);
-				((BuitInTypeContext)_localctx).ast =  new IntType();
+				((BuitInTypeContext)_localctx).ast =  Types.getInt();
 				}
 				break;
 			case T__19:
@@ -1097,7 +1097,7 @@ public class PmmParser extends Parser {
 				{
 				setState(237);
 				match(T__19);
-				((BuitInTypeContext)_localctx).ast =  new DoubleType();
+				((BuitInTypeContext)_localctx).ast =  Types.getDouble();
 				}
 				break;
 			case T__20:
@@ -1105,7 +1105,7 @@ public class PmmParser extends Parser {
 				{
 				setState(239);
 				match(T__20);
-				((BuitInTypeContext)_localctx).ast =  new CharType();
+				((BuitInTypeContext)_localctx).ast =  Types.getChar();
 				}
 				break;
 			default:

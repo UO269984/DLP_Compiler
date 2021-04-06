@@ -1,9 +1,8 @@
 package ast.types;
 
-import ast.NoPosASTNode;
 import ast.Type;
 
-public abstract class ComposedType extends NoPosASTNode implements Type {
+public abstract class ComposedType extends AbstractType {
 	private Type type;
 	
 	public ComposedType(Type type) {

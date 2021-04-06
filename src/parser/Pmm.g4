@@ -76,9 +76,9 @@ type returns [Type ast]:
 		| '[' INT_CONSTANT ']' type {$ast = new ArrayType($type.ast, LexerHelper.lexemeToInt($INT_CONSTANT.text));};
 
 buitInType returns [Type ast]:
-		'int' {$ast = new IntType();}
-		| 'double' {$ast = new DoubleType();}
-		| 'char' {$ast = new CharType();};
+		'int' {$ast = Types.getInt();}
+		| 'double' {$ast = Types.getDouble();}
+		| 'char' {$ast = Types.getChar();};
 
 struct returns [Type ast]:
 		{StructType struct = new StructType();}

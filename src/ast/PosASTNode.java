@@ -4,6 +4,10 @@ public abstract class PosASTNode implements ASTNode {
 	private int line;
 	private int column;
 	
+	public PosASTNode() {
+		this(0, 0);
+	}
+	
 	public PosASTNode(int line, int column) {
 		if (line < 0)
 			throw new IllegalArgumentException("Línea negativa");

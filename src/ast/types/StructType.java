@@ -5,11 +5,10 @@ import java.util.Set;
 import java.util.HashSet;
 
 import ast.Type;
-import ast.NoPosASTNode;
 import ast.VarDefinition;
 import visitor.Visitor;
 
-public class StructType extends NoPosASTNode implements Type {
+public class StructType extends AbstractType {
 	private Set<RecordField> fields;
 	private String repeatedField;
 	

@@ -1,11 +1,9 @@
 package ast.types;
 
-import ast.Type;
-import ast.PosASTNode;
 import errorhandler.EH;
 import visitor.Visitor;
 
-public class ErrorType extends PosASTNode implements Type {
+public class ErrorType extends AbstractType {
 	private String message;
 	
 	public ErrorType(String message, int line, int column) {

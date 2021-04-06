@@ -1,10 +1,10 @@
 package ast.types;
 
-import ast.Type;
-import ast.NoPosASTNode;
 import visitor.Visitor;
 
-public class DoubleType extends NoPosASTNode implements Type {
+public class DoubleType extends AbstractType {
+	
+	DoubleType() {}
 	
 	@Override
 	public Object accept(Visitor visitor, Object param) {

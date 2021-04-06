@@ -11,7 +11,7 @@ public class FuncType extends ComposedType {
 	private List<VarDefinition> paramsTypes;
 	
 	public FuncType(List<VarDefinition> params) {
-		super(new VoidType());
+		super(Types.getVoid());
 		this.paramsTypes = params;
 	}
 	

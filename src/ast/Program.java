@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import visitor.Visitor;
 
-public class Program extends NoPosASTNode {
+public class Program extends PosASTNode {
 	private List<Definition> definitions;
 	
 	public Program() {
