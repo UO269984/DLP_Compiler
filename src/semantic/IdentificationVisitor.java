@@ -13,6 +13,7 @@ import ast.expresions.ExpressionWithDefinition;
 
 import ast.types.ErrorType;
 import errorhandler.EH;
+import util.ErrorMSG;
 
 public class IdentificationVisitor extends AbstractVisitor {
 	
@@ -50,15 +51,12 @@ public class IdentificationVisitor extends AbstractVisitor {
 	
 	public void addDefinition(Definition def) {
 		if (! this.symbolTable.insert(def))
-			new ErrorType("'" + def.getName() + "' already defined", def.getLine(), def.getColumn());
+			new ErrorType(ErrorMSG.getMsg("symbolError.alreadyDefined", def.getName()), def.getLine(), def.getColumn());
 	}
 	
 	public void checkDefined(ExpressionWithDefinition exp) {
 		Definition def = this.symbolTable.find(exp.getName());
 		if (def != null)
 			exp.setDefinition(def);
-		
-		else
-			new ErrorType("'" + exp.getName() + "' not defined", exp.getLine(), exp.getColumn());
 	}
 }

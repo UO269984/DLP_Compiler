@@ -80,9 +80,8 @@ buitInType returns [Type ast]:
 		| 'double' {$ast = Types.getDouble();}
 		| 'char' {$ast = Types.getChar();};
 
-struct returns [Type ast]:
-		{StructType struct = new StructType();}
-		'struct' '{' (varDef {struct.addFields($varDef.ast);})* '}' {$ast = struct.getTypeOrError();};
+struct returns [StructType ast = new StructType()]:
+		'struct' '{' (varDef {$ast.addFields($varDef.ast);})* '}';
 
 expresion returns [Expresion ast]:
 		INT_CONSTANT {$ast = new IntLiteral(LexerHelper.lexemeToInt($INT_CONSTANT.text), $INT_CONSTANT.getLine(), $INT_CONSTANT.getCharPositionInLine());}
@@ -99,7 +98,7 @@ expresion returns [Expresion ast]:
 		| exp1=expresion operand=('*' | '/' | '%') exp2=expresion {$ast = new Arithmetic($exp1.ast, $exp2.ast, $operand.text, $exp1.ast.getLine(), $exp1.ast.getColumn());}
 		| exp1=expresion operand=('+' | '-') exp2=expresion {$ast = new Arithmetic($exp1.ast, $exp2.ast, $operand.text, $exp1.ast.getLine(), $exp1.ast.getColumn());}
 		| exp1=expresion operand=('>' | '>=' | '<' | '<=' | '!=' | '==') exp2=expresion {$ast = new Comparison($exp1.ast, $exp2.ast, $operand.text, $exp1.ast.getLine(), $exp1.ast.getColumn());}
-		| exp1=expresion operand=('&&' | '||') exp2=expresion {$ast = new Comparison($exp1.ast, $exp2.ast, $operand.text, $exp1.ast.getLine(), $exp1.ast.getColumn());};
+		| exp1=expresion operand=('&&' | '||') exp2=expresion {$ast = new LogicOperation($exp1.ast, $exp2.ast, $operand.text, $exp1.ast.getLine(), $exp1.ast.getColumn());};
 
 funcCall returns [FuncCall ast]:
 		ID '(' funcCallParams ')' {$ast = new FuncCall($ID.text, $funcCallParams.ast, $ID.getLine(), $ID.getCharPositionInLine());};

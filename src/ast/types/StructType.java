@@ -1,44 +1,52 @@
 package ast.types;
 
 import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
 
 import ast.Type;
 import ast.VarDefinition;
+import ast.ASTNode;
+
 import visitor.Visitor;
+import util.ErrorMSG;
 
 public class StructType extends AbstractType {
-	private Set<RecordField> fields;
-	private String repeatedField;
+	private Map<String, RecordField> fields;
 	
 	public StructType() {
-		this.fields = new HashSet<RecordField>();
-		this.repeatedField = null;
+		this.fields = new HashMap<String, RecordField>();
 	}
 	
 	public void addFields(List<VarDefinition> definitions) {
-		if (this.repeatedField == null) {
+		for (VarDefinition def : definitions) {
+			String name = def.getName();
 			
-			for (VarDefinition def : definitions) {
-				if (! this.fields.add(new RecordField(def.getName(), def.getType(), 0))) {
-					this.repeatedField = def.getName();
-					return;
-				}
-			}
+			if (this.fields.containsKey(name))
+				new ErrorType(ErrorMSG.getMsg("structError.repeatedField", name), def.getLine(), def.getColumn());
+			
+			else
+				this.fields.put(name, new RecordField(name, def.getType(), 0));
 		}
 	}
 	
-	public Type getTypeOrError() {
-		if (this.repeatedField == null)
-			return this;
+	@Override
+	public Type structAccess(String fieldName, ASTNode node) {
+		RecordField record = this.fields.get(fieldName);
+		if (record == null)
+			return new ErrorType(ErrorMSG.getMsg("structError.undefinedField", fieldName), node.getLine(), node.getColumn());
 		
 		else
-			return new ErrorType("Repeated field '" + this.repeatedField + "' in struct", getLine(), getColumn());
+			return record.getType();
 	}
 	
 	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);
+	}
+	
+	@Override
+	public String toString() {
+		return "struct";
 	}
 }

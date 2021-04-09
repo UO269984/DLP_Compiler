@@ -15,6 +15,10 @@ public abstract class ExpressionWithDefinition extends AbstractExpression {
 		return this.name;
 	}
 	
+	public Definition getDefinition() {
+		return this.definition;
+	}
+	
 	public void setDefinition(Definition definition) {
 		this.definition = definition;
 	}

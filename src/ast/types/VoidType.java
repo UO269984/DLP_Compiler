@@ -10,4 +10,9 @@ public class VoidType extends AbstractType {
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);
 	}
+	
+	@Override
+	public String toString() {
+		return "void";
+	}
 }

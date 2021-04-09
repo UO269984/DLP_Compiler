@@ -11,6 +11,10 @@ public class StructAccess extends UnaryExpresion {
 		this.fieldName = fieldName;
 	}
 	
+	public String getFieldName() {
+		return this.fieldName;
+	}
+	
 	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);

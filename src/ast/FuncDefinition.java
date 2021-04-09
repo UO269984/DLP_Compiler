@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import ast.types.VoidType;
 import visitor.Visitor;
 
-public class FuncDefinition extends AbstractDefinition implements Definition {
+public class FuncDefinition extends AbstractDefinition {
 	
 	private List<VarDefinition> varDefinitions;
 	private List<Statement> statements;

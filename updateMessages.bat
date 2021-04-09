@@ -1,0 +1,1 @@
+copy src\util\errors.properties bin\util

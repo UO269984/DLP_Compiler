@@ -33,6 +33,13 @@ public class AbstractVisitor implements Visitor {
 	}
 	
 	@Override
+	public Object visit(LogicOperation node, Object param) {
+		node.getExpresion1().accept(this, param);
+		node.getExpresion2().accept(this, param);
+		return param;
+	}
+	
+	@Override
 	public Object visit(FuncCall node, Object param) {
 		for (Expresion funcParam : node.getParams())
 			funcParam.accept(this, param);

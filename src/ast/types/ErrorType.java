@@ -1,5 +1,11 @@
 package ast.types;
 
+import java.util.List;
+
+import ast.Expresion;
+import ast.Type;
+import ast.ASTNode;
+
 import errorhandler.EH;
 import visitor.Visitor;
 
@@ -14,8 +20,63 @@ public class ErrorType extends AbstractType {
 	}
 	
 	@Override
+	public boolean isLogical() {
+		return true;
+	}
+	
+	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);
+	}
+	
+	@Override
+	public Type arithmetic(Type type, ASTNode node) {
+		return this;
+	}
+	
+	@Override
+	public Type arithmetic(ASTNode node) {
+		return this;
+	}
+	
+	@Override
+	public Type comparison(Type type, ASTNode node) {
+		return this;
+	}
+	
+	@Override
+	public Type logic(Type type, ASTNode node) {
+		return this;
+	}
+	
+	@Override
+	public Type logic(ASTNode node) {
+		return this;
+	}
+	
+	@Override
+	public Type promotesTo(Type type, ASTNode node) {
+		return this;
+	}
+	
+	@Override
+	public Type canBeCastTo(Type type, ASTNode node) {
+		return this;
+	}
+	
+	@Override
+	public Type arrayAccess(Type type, ASTNode node) {
+		return this;
+	}
+	
+	@Override
+	public Type structAccess(String type, ASTNode node) {
+		return this;
+	}
+	
+	@Override
+	public Type funcCall(List<Expresion> params, ASTNode node) {
+		return this;
 	}
 	
 	@Override

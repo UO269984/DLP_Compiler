@@ -14,6 +14,7 @@ public interface Visitor {
 	public Object visit(Variable node, Object param);
 	public Object visit(Arithmetic node, Object param);
 	public Object visit(Comparison node, Object param);
+	public Object visit(LogicOperation node, Object param);
 	
 	public Object visit(FuncCall node, Object param);
 	public Object visit(ArrayAccess node, Object param);

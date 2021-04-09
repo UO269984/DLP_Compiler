@@ -5,7 +5,7 @@ import org.antlr.v4.runtime.*;
 import ast.Program;
 import errorhandler.EH;
 import visitor.Visitor;
-import semantic.LValueVisitor;
+import semantic.TypeCheckingVisitor;
 import semantic.IdentificationVisitor;
 
 import introspector.model.IntrospectorModel;
@@ -29,7 +29,7 @@ public class Main {
 		Program ast = parser.program().ast;
 		
 		runVisitor(new IdentificationVisitor(), ast);
-		runVisitor(new LValueVisitor(), ast);
+		runVisitor(new TypeCheckingVisitor(), ast);
 		
 		// * Check errors 
 		if (EH.getEH().hasErrors()) {
