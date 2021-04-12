@@ -12,6 +12,11 @@ public class CharType extends AbstractType {
 	CharType() {}
 	
 	@Override
+	public int numberOfBytes() {
+		return 1;
+	}
+	
+	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);
 	}

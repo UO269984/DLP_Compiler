@@ -23,4 +23,12 @@ public class RecordField {
 	public Type getType() {
 		return this.type;
 	}
+	
+	public int getOffset() {
+		return this.offset;
+	}
+	
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
 }

@@ -17,6 +17,11 @@ public class ArrayType extends ComposedType {
 	}
 	
 	@Override
+	public int numberOfBytes() {
+		return this.size * getType().numberOfBytes();
+	}
+	
+	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);
 	}

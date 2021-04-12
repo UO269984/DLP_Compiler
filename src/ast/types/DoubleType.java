@@ -13,6 +13,11 @@ public class DoubleType extends AbstractType {
 	DoubleType() {}
 	
 	@Override
+	public int numberOfBytes() {
+		return 4;
+	}
+	
+	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);
 	}

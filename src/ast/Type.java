@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface Type extends ASTNode {
 	
+	public int numberOfBytes();
+	
 	public boolean isLogical();
 	public boolean isBuiltInType();
 	public Type arithmetic(Type type, ASTNode node);

@@ -13,9 +13,11 @@ import util.ErrorMSG;
 
 public class StructType extends AbstractType {
 	private Map<String, RecordField> fields;
+	private int size;
 	
 	public StructType() {
 		this.fields = new HashMap<String, RecordField>();
+		this.size = 0;
 	}
 	
 	public void addFields(List<VarDefinition> definitions) {
@@ -25,9 +27,21 @@ public class StructType extends AbstractType {
 			if (this.fields.containsKey(name))
 				new ErrorType(ErrorMSG.getMsg("structError.repeatedField", name), def.getLine(), def.getColumn());
 			
-			else
+			else {
 				this.fields.put(name, new RecordField(name, def.getType(), 0));
+				this.size += def.getType().numberOfBytes();
+			}
 		}
+	}
+	
+	@Override
+	public int numberOfBytes() {
+		return this.size;
+	}
+	
+	@Override
+	public Object accept(Visitor visitor, Object param) {
+		return visitor.visit(this, param);
 	}
 	
 	@Override
@@ -38,11 +52,6 @@ public class StructType extends AbstractType {
 		
 		else
 			return record.getType();
-	}
-	
-	@Override
-	public Object accept(Visitor visitor, Object param) {
-		return visitor.visit(this, param);
 	}
 	
 	@Override

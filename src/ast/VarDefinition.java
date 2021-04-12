@@ -13,6 +13,14 @@ public class VarDefinition extends AbstractDefinition {
 		super(name, type, line, column);
 	}
 	
+	public int getOffset() {
+		return this.offset;
+	}
+	
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+	
 	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);

@@ -19,6 +19,11 @@ public abstract class AbstractType extends PosASTNode implements Type {
 	}
 	
 	@Override
+	public int numberOfBytes() {
+		return 0;
+	}
+	
+	@Override
 	public boolean isLogical() {
 		return false;
 	}

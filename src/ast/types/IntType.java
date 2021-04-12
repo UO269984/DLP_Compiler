@@ -12,6 +12,11 @@ public class IntType extends AbstractType {
 	IntType() {}
 	
 	@Override
+	public int numberOfBytes() {
+		return 2;
+	}
+	
+	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);
 	}
