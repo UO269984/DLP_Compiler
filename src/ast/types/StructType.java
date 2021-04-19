@@ -28,7 +28,7 @@ public class StructType extends AbstractType {
 				new ErrorType(ErrorMSG.getMsg("structError.repeatedField", name), def.getLine(), def.getColumn());
 			
 			else {
-				this.fields.put(name, new RecordField(name, def.getType(), 0));
+				this.fields.put(name, new RecordField(name, def.getType(), this.size));
 				this.size += def.getType().numberOfBytes();
 			}
 		}

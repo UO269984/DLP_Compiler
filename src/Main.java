@@ -10,6 +10,7 @@ import semantic.IdentificationVisitor;
 
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
+import codegenerator.OffsetVisitor;
 
 public class Main {
 	
@@ -38,6 +39,7 @@ public class Main {
 		}
 		
 		else {
+			runVisitor(new OffsetVisitor(), ast);
 			// * The AST is shown
 			IntrospectorModel model = new IntrospectorModel("Program", ast);
 			new IntrospectorTree("Introspector", model);
