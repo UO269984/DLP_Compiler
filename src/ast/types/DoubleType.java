@@ -18,6 +18,11 @@ public class DoubleType extends AbstractType {
 	}
 	
 	@Override
+	public char suffix() {
+		return 'f';
+	}
+	
+	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);
 	}

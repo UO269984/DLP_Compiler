@@ -24,6 +24,11 @@ public abstract class AbstractType extends PosASTNode implements Type {
 	}
 	
 	@Override
+	public char suffix() {
+		throw new IllegalStateException("Type without suffix");
+	}
+	
+	@Override
 	public boolean isLogical() {
 		return false;
 	}

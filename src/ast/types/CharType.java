@@ -17,6 +17,11 @@ public class CharType extends AbstractType {
 	}
 	
 	@Override
+	public char suffix() {
+		return 'b';
+	}
+	
+	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);
 	}
