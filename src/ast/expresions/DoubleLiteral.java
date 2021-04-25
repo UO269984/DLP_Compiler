@@ -10,6 +10,10 @@ public class DoubleLiteral extends AbstractExpression {
 		this.doubleNum = doubleNum;
 	}
 	
+	public double getLiteral() {
+		return this.doubleNum;
+	}
+	
 	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);

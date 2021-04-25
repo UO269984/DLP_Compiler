@@ -10,6 +10,10 @@ public class IntLiteral extends AbstractExpression {
 		this.intNum = intNum;
 	}
 	
+	public int getLiteral() {
+		return this.intNum;
+	}
+	
 	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);

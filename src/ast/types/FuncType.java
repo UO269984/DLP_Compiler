@@ -14,14 +14,20 @@ import util.ErrorMSG;
 
 public class FuncType extends ComposedType {
 	private List<VarDefinition> paramsTypes;
+	private int paramsSize;
 	
 	public FuncType(List<VarDefinition> params) {
 		super(Types.getVoid());
 		this.paramsTypes = params;
+		this.paramsSize = params.stream().mapToInt(def -> def.getType().numberOfBytes()).sum();
 	}
 	
 	public List<VarDefinition> getParamTypes() {
 		return this.paramsTypes;
+	}
+	
+	public int getParamsSize() {
+		return this.paramsSize;
 	}
 	
 	public Type getRetType() {

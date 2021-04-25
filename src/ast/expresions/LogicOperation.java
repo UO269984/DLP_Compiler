@@ -3,12 +3,10 @@ package ast.expresions;
 import ast.Expresion;
 import visitor.Visitor;
 
-public class LogicOperation extends BinaryExpresion {
-	private String operand;
+public class LogicOperation extends BinaryOperation {
 	
 	public LogicOperation(Expresion left, Expresion right, String operand, int line, int column) {
-		super(left, right, line, column);
-		this.operand = operand;
+		super(left, right, operand, line, column);
 	}
 	
 	@Override

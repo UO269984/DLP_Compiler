@@ -22,6 +22,11 @@ public class IntType extends AbstractType {
 	}
 	
 	@Override
+	public int getCastId() {
+		return 1;
+	}
+	
+	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);
 	}

@@ -9,16 +9,22 @@ import visitor.Visitor;
 public class FuncDefinition extends AbstractDefinition {
 	
 	private List<VarDefinition> varDefinitions;
+	private int varsSize;
 	private List<Statement> statements;
 	
 	public FuncDefinition(String name, Type funcType, int line, int column) {
 		super(name, funcType, line, column);
 		this.varDefinitions = new LinkedList<VarDefinition>();
 		this.statements = new LinkedList<Statement>();
+		this.varsSize = 0;
 	}
 	
 	public List<VarDefinition> getVarDefinitions() {
 		return this.varDefinitions;
+	}
+	
+	public int getVarsSize() {
+		return this.varsSize;
 	}
 	
 	public List<Statement> getStatements() {
@@ -31,6 +37,7 @@ public class FuncDefinition extends AbstractDefinition {
 	
 	public void addVarsDef(List<VarDefinition> varsDef) {
 		this.varDefinitions.addAll(varsDef);
+		this.varsSize += varsDef.stream().mapToInt(def -> def.getType().numberOfBytes()).sum();
 	}
 	
 	@Override

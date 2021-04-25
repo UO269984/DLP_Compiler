@@ -6,6 +6,7 @@ public interface Type extends ASTNode {
 	
 	public int numberOfBytes();
 	public char suffix();
+	public int getCastId();
 	
 	public boolean isLogical();
 	public boolean isBuiltInType();

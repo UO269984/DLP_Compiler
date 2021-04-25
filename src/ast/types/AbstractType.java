@@ -29,6 +29,11 @@ public abstract class AbstractType extends PosASTNode implements Type {
 	}
 	
 	@Override
+	public int getCastId() {
+		throw new IllegalStateException("Type without cast id");
+	}
+	
+	@Override
 	public boolean isLogical() {
 		return false;
 	}

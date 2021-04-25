@@ -23,6 +23,11 @@ public class DoubleType extends AbstractType {
 	}
 	
 	@Override
+	public int getCastId() {
+		return 2;
+	}
+	
+	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);
 	}

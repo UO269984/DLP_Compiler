@@ -10,6 +10,10 @@ public class CharLiteral extends AbstractExpression {
 		this.character = character;
 	}
 	
+	public char getLiteral() {
+		return this.character;
+	}
+	
 	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);

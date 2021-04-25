@@ -1,1 +1,1 @@
-java -cp "bin;lib/antlr-4.9.1-complete.jar;lib/introspector.jar" Main %1
+java -cp "bin;lib/antlr-4.9.1-complete.jar;lib/introspector.jar" Main %1 %2

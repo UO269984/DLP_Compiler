@@ -1,3 +1,6 @@
+if not exist bin (
+	mkdir bin
+)
 javac -encoding utf-8 -d bin -cp "src;lib/antlr-4.9.1-complete.jar;lib/introspector.jar"^
 	src/util/*.java^
 	src/ast/*.java^

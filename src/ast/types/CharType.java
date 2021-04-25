@@ -22,6 +22,11 @@ public class CharType extends AbstractType {
 	}
 	
 	@Override
+	public int getCastId() {
+		return 0;
+	}
+	
+	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);
 	}

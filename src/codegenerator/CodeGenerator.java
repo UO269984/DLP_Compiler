@@ -1,24 +1,39 @@
 package codegenerator;
 
 import ast.Type;
+import ast.VarDefinition;
+
+import java.util.Collections;
 import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 
 public class CodeGenerator {
 	
-	private PrintWriter out;
+	public static final String INDENT = "\t";
 	
-	public CodeGenerator(String outFilename) {
+	private PrintWriter out;
+	private int indentAmount;
+	private String curIndent;
+	
+	public CodeGenerator(String outFilename, String inFilename) {
+		this.indentAmount = 0;
+		updateCurIndent();
+		
 		try {
 			this.out = new PrintWriter(outFilename);
 		}
 		catch (FileNotFoundException ex) {
 			throw new RuntimeException("Can not open " + outFilename + " file");
 		}
+		this.source(inFilename);
 	}
 	
 	private void write(String toWrite) {
-		this.out.write(toWrite);
+		this.out.write(this.curIndent + toWrite + "\n");
+	}
+	
+	public void close() {
+		this.out.close();
 	}
 	
 	public void simpleInst(String inst, Type type) {
@@ -27,6 +42,10 @@ public class CodeGenerator {
 	
 	public void pushBP() {
 		write("pusha BP");
+	}
+	
+	public <T>void push(T toPush) {
+		write("push " + toPush);
 	}
 	
 	public <T>void push(Type type, T toPush) {
@@ -53,6 +72,10 @@ public class CodeGenerator {
 		simpleInst("dup", type);
 	}
 	
+	public void add() {
+		write("add");
+	}
+	
 	public void add(Type type) {
 		simpleInst("add", type);
 	}
@@ -73,27 +96,27 @@ public class CodeGenerator {
 		simpleInst("mod", type);
 	}
 	
-	public <T>void gt(Type type) {
+	public void gt(Type type) {
 		simpleInst("gt", type);
 	}
 	
-	public <T>void lt(Type type) {
+	public void lt(Type type) {
 		simpleInst("lt", type);
 	}
 	
-	public <T>void ge(Type type) {
+	public void ge(Type type) {
 		simpleInst("ge", type);
 	}
 	
-	public <T>void le(Type type) {
+	public void le(Type type) {
 		simpleInst("le", type);
 	}
 	
-	public <T>void eq(Type type) {
+	public void eq(Type type) {
 		simpleInst("eq", type);
 	}
 	
-	public <T>void ne(Type type) {
+	public void ne(Type type) {
 		simpleInst("ne", type);
 	}
 	
@@ -166,10 +189,36 @@ public class CodeGenerator {
 	}
 	
 	public void source(String code) {
-		write("#source " + code);
+		write("#source \"" + code + "\"");
 	}
 	
 	public void line(int line) {
 		write("#line " + line);
+	}
+	
+	public void comment(String comment) {
+		write("'" + comment);
+	}
+	
+	public void varInfo(VarDefinition def) {
+		comment(" * " + def.getType() + " " + def.getName() + " (offset " + def.getOffset() + ")");
+	}
+	
+	public void emptyLine() {
+		write("");
+	}
+	
+	public void addIndent() {
+		this.indentAmount++;
+		updateCurIndent();
+	}
+	
+	public void removeIndent() {
+		this.indentAmount--;
+		updateCurIndent();
+	}
+	
+	private void updateCurIndent() {
+		this.curIndent = String.join("", Collections.nCopies(this.indentAmount, INDENT));
 	}
 }
