@@ -85,7 +85,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 		this.cg.enter(node.getVarsSize());
 		
 		for (Statement statement : node.getStatements())
-			statement.accept(this, param);
+			statement.accept(this, node);
 		
 		if (funcType.getRetType() == Types.getVoid())
 			new FuncReturn(null, 0, 0).accept(this, node);
