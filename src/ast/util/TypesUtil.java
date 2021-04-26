@@ -18,6 +18,17 @@ public class TypesUtil {
 			return new ErrorType(ErrorMSG.getMsg(errorName, type1.toString(), type2.toString()), node.getLine(), node.getColumn());
 	}
 	
+	public static Type checkSameTypesRetType(Type type1, Type type2, Type retType, ASTNode node, String errorName) {
+		if (type1.equals(type2))
+			return retType;
+		
+		else if (type2 instanceof ErrorType)
+			return type2;
+		
+		else
+			return new ErrorType(ErrorMSG.getMsg(errorName, type1.toString(), type2.toString()), node.getLine(), node.getColumn());
+	}
+	
 	public static Type checkCast(Type type1, Type type2, ASTNode node) {
 		if (type2.isBuiltInType() || type2 instanceof ErrorType)
 			return type2;
