@@ -16,10 +16,6 @@ public class Cast extends UnaryExpresion {
 		return this.castType;
 	}
 	
-	public int getCastId() {
-		return Cast.getCastId(getExpresion().getType(), this.castType);
-	}
-	
 	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);

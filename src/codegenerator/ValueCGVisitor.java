@@ -13,7 +13,7 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	
 	private CodeGenerator cg;
 	private Map<String, Consumer<Type>> operationFuncs;
-	private Map<Integer, Runnable> castsFuncs;
+	
 	private AddressCGVisitor addressVisitor;
 	
 	public ValueCGVisitor(CodeGenerator codeGenerator) {
@@ -32,18 +32,6 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 		this.operationFuncs.put("<=", this.cg::le);
 		this.operationFuncs.put("==", this.cg::eq);
 		this.operationFuncs.put("!=", this.cg::ne);
-		
-		this.castsFuncs = new HashMap<Integer, Runnable>();
-		Type charType = Types.getChar();
-		Type intType = Types.getInt();
-		Type doubleType = Types.getDouble();
-		
-		this.castsFuncs.put(Cast.getCastId(charType, intType), this.cg::b2i);
-		this.castsFuncs.put(Cast.getCastId(intType, charType), this.cg::i2b);
-		this.castsFuncs.put(Cast.getCastId(intType, doubleType), this.cg::i2f);
-		this.castsFuncs.put(Cast.getCastId(doubleType, intType), this.cg::f2i);
-		this.castsFuncs.put(Cast.getCastId(charType, doubleType), () -> {this.cg.b2i(); this.cg.i2f();});
-		this.castsFuncs.put(Cast.getCastId(doubleType, charType), () -> {this.cg.f2i(); this.cg.i2b();});
 	}
 	
 	public void setAddressVisitor(AddressCGVisitor addressVisitor) {
@@ -63,12 +51,21 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	/*
 	value[[Arithmetic : arithmetic -> operand]](operations)=
 		value[[arithmetic.left]]()
+		cg.converTo(arithmetic.right.type, arithmetic.type)
+		
 		value[[arithmetic.right]]()
+		cg.converTo(arithmetic.left.type, arithmetic.type)
 		operations.get(operand)(arithmetic.type)
 	*/
 	@Override
 	public Object visit(Arithmetic node, Object param) {
-		makeBinaryOperation(node, param);
+		node.getExpresion1().accept(this, param);
+		this.cg.convertTo(node.getExpresion1().getType(), node.getType());
+		
+		node.getExpresion2().accept(this, param);
+		this.cg.convertTo(node.getExpresion2().getType(), node.getType());
+		
+		this.operationFuncs.get(node.getOperand()).accept(node.getType()); //El accept es de la clase Consumer
 		return param;
 	}
 	
@@ -81,14 +78,10 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	*/
 	@Override
 	public Object visit(Comparison node, Object param) {
-		makeBinaryOperation(node, param);
+		node.getExpresion1().accept(this, param);
+		node.getExpresion2().accept(this, param);
+		this.operationFuncs.get(node.getOperand()).accept(node.getType()); //El accept es de la clase Consumer
 		return param;
-	}
-	
-	private void makeBinaryOperation(BinaryOperation operation, Object param) {
-		operation.getExpresion1().accept(this, param);
-		operation.getExpresion2().accept(this, param);
-		this.operationFuncs.get(operation.getOperand()).accept(operation.getType()); //El accept es de la clase Consumer
 	}
 	
 	/*
@@ -161,15 +154,14 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	value[[Cast : cast -> castType expType castExp]](castsFuncs)=
+	value[[Cast : cast -> castType castExp]]()=
 		value[[castExp]]()
-		castsFuncs.get(cast.castId)()
+		cg.converTo(castExp.type, castType)
 	*/
 	@Override
 	public Object visit(Cast node, Object param) {
 		node.getExpresion().accept(this, param);
-		this.castsFuncs.get(node.getCastId()).run();
-		
+		this.cg.convertTo(node.getExpresion().getType(), node.getCastType());
 		return param;
 	}
 	

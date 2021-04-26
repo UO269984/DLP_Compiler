@@ -49,14 +49,18 @@ public class AddressCGVisitor extends AbstractCGVisitor {
 	address[[ArrayAccess : expression -> array index]]()=
 		address[[expression.array]])()
 		value[[expression.index]])()
+		<push> expression.type.numberOfBytes()
+		<mul>
 		<add>
 	*/
 	@Override
 	public Object visit(ArrayAccess node, Object param) {
 		node.getExpresion1().accept(this, param);
 		node.getExpresion2().accept(this.valueVisitor, param);
-		this.cg.add();
+		this.cg.push(node.getType().numberOfBytes());
+		this.cg.mul(Types.getInt());
 		
+		this.cg.add();
 		return param;
 	}
 	

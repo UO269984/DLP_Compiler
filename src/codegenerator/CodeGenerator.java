@@ -1,9 +1,13 @@
 package codegenerator;
 
 import ast.Type;
+import ast.types.Types;
+import ast.expresions.Cast;
 import ast.VarDefinition;
 
 import java.util.Collections;
+import java.util.Map;
+import java.util.HashMap;
 import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 
@@ -14,6 +18,8 @@ public class CodeGenerator {
 	private PrintWriter out;
 	private int indentAmount;
 	private String curIndent;
+	
+	private Map<Integer, Runnable> castsFuncs;
 	
 	public CodeGenerator(String outFilename, String inFilename) {
 		this.indentAmount = 0;
@@ -26,6 +32,25 @@ public class CodeGenerator {
 			throw new RuntimeException("Can not open " + outFilename + " file");
 		}
 		this.source(inFilename);
+		
+		this.castsFuncs = new HashMap<Integer, Runnable>();
+		Type charType = Types.getChar();
+		Type intType = Types.getInt();
+		Type doubleType = Types.getDouble();
+		
+		this.castsFuncs.put(Cast.getCastId(charType, charType), () -> {});
+		this.castsFuncs.put(Cast.getCastId(intType, intType), () -> {});
+		this.castsFuncs.put(Cast.getCastId(doubleType, doubleType), () -> {});
+		this.castsFuncs.put(Cast.getCastId(charType, intType), this::b2i);
+		this.castsFuncs.put(Cast.getCastId(intType, charType), this::i2b);
+		this.castsFuncs.put(Cast.getCastId(intType, doubleType), this::i2f);
+		this.castsFuncs.put(Cast.getCastId(doubleType, intType), this::f2i);
+		this.castsFuncs.put(Cast.getCastId(charType, doubleType), () -> {this.b2i(); this.i2f();});
+		this.castsFuncs.put(Cast.getCastId(doubleType, charType), () -> {this.f2i(); this.i2b();});
+	}
+	
+	public void convertTo(Type expType, Type castType) {
+		this.castsFuncs.get(Cast.getCastId(expType, castType)).run();
 	}
 	
 	private void write(String toWrite) {
