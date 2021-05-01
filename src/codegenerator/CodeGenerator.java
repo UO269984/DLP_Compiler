@@ -18,12 +18,14 @@ public class CodeGenerator {
 	private PrintWriter out;
 	private int indentAmount;
 	private String curIndent;
+	private int labelCount;
 	
 	private Map<Integer, Runnable> castsFuncs;
 	
 	public CodeGenerator(String outFilename, String inFilename) {
 		this.indentAmount = 0;
 		updateCurIndent();
+		this.labelCount = 0;
 		
 		try {
 			this.out = new PrintWriter(outFilename);
@@ -181,20 +183,28 @@ public class CodeGenerator {
 		write("i2b");
 	}
 	
+	public void label(String name, int labelNum) {
+		write(getLabelName(name, labelNum) + ":");
+	}
+	
+	private String getLabelName(String name, int labelNum) {
+		return name + "_" + labelNum;
+	}
+	
 	public void label(String name) {
 		write(name + ":");
 	}
 	
-	public void jmp(String labelName) {
-		write("jmp " + labelName);
+	public void jmp(String labelName, int labelNum) {
+		write("jmp " + getLabelName(labelName, labelNum));
 	}
 	
-	public void jz(String labelName) {
-		write("jz " + labelName);
+	public void jz(String labelName, int labelNum) {
+		write("jz " + getLabelName(labelName, labelNum));
 	}
 	
-	public void jnz(String labelName) {
-		write("jnz " + labelName);
+	public void jnz(String labelName, int labelNum) {
+		write("jnz " + getLabelName(labelName, labelNum));
 	}
 	
 	public void call(String functionName) {
@@ -231,6 +241,10 @@ public class CodeGenerator {
 	
 	public void emptyLine() {
 		write("");
+	}
+	
+	public int getLabelCount() {
+		return this.labelCount++;
 	}
 	
 	public void addIndent() {

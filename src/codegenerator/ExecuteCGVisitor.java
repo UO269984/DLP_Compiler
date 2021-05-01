@@ -94,6 +94,79 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 		return param;
 	}
 	
+	/*
+	execute[[WhileLoop loop -> condition statement*]]()=
+		int label = cg.getLabel()
+		
+		inicioWhile label:
+			value[[condition]]()
+			<jz> endWhile label
+			for statement in statement*
+				execute[[statement]]()
+		
+		<jmp> inicioWhile label
+		endWhile label:
+	*/
+	@Override
+	public Object visit(WhileLoop node, Object param) {
+		int labelNum = this.cg.getLabelCount();
+		this.cg.label("whileStart", labelNum);
+		this.cg.addIndent();
+		
+		node.getExpresion().accept(this.valueVisitor, param);
+		this.cg.jz("whileEnd", labelNum);
+		
+		for (Statement whileStatement : node.getWhileStatements())
+			whileStatement.accept(this, param);
+		
+		this.cg.jmp("whileStart", labelNum);
+		
+		this.cg.removeIndent();
+		this.cg.label("whileEnd", labelNum);
+		return param;
+	}
+	
+	/*
+	execute[[IfCond condStatement -> cond ifStatements* elseStatements*]]()=
+		int label = cg.getLabel()
+		
+		value[[cond]]()
+		jz else label
+			for statement in ifStatements*
+				execute[[statement]]()
+			
+			<jmp> end label
+		
+		else label:
+			for statement in elseStatements
+				execute[[statement]]()
+		end label:
+			
+	*/
+	@Override
+	public Object visit(IfCond node, Object param) {
+		int labelNum = this.cg.getLabelCount();
+		this.cg.addIndent();
+		
+		node.getExpresion().accept(this.valueVisitor, param);
+		this.cg.jz("elseStart", labelNum);
+		
+		for (Statement ifStatement : node.getIfStatements())
+			ifStatement.accept(this, param);
+		
+		this.cg.jmp("elseEnd", labelNum);
+		this.cg.removeIndent();
+		
+		this.cg.label("elseStart", labelNum);
+		this.cg.addIndent();
+		for (Statement elseStatement : node.getElseStatements())
+			elseStatement.accept(this, param);
+		
+		this.cg.removeIndent();
+		this.cg.label("elseEnd", labelNum);
+		return param;
+	}
+	
 	@Override
 	public Object visit(VarDefinition node, Object param) {
 		this.cg.varInfo(node);
