@@ -3,11 +3,14 @@ package codegenerator;
 import ast.Type;
 import ast.types.Types;
 import ast.expresions.Cast;
+import ast.expresions.BinaryOperation;
 import ast.VarDefinition;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.function.Consumer;
+
 import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 
@@ -20,6 +23,7 @@ public class CodeGenerator {
 	private String curIndent;
 	private int labelCount;
 	
+	private Map<String, Consumer<Type>> operationFuncs;
 	private Map<Integer, Runnable> castsFuncs;
 	
 	public CodeGenerator(String outFilename, String inFilename) {
@@ -34,6 +38,20 @@ public class CodeGenerator {
 			throw new RuntimeException("Can not open " + outFilename + " file");
 		}
 		this.source(inFilename);
+		
+		this.operationFuncs = new HashMap<String, Consumer<Type>>();
+		this.operationFuncs.put("+", this::add);
+		this.operationFuncs.put("-", this::sub);
+		this.operationFuncs.put("*", this::mul);
+		this.operationFuncs.put("/", this::div);
+		this.operationFuncs.put("%", this::mod);
+		
+		this.operationFuncs.put(">", this::gt);
+		this.operationFuncs.put("<", this::lt);
+		this.operationFuncs.put(">=", this::ge);
+		this.operationFuncs.put("<=", this::le);
+		this.operationFuncs.put("==", this::eq);
+		this.operationFuncs.put("!=", this::ne);
 		
 		this.castsFuncs = new HashMap<Integer, Runnable>();
 		Type charType = Types.getChar();
@@ -53,6 +71,10 @@ public class CodeGenerator {
 	
 	public void convertTo(Type expType, Type castType) {
 		this.castsFuncs.get(Cast.getCastId(expType, castType)).run();
+	}
+	
+	public void binaryOperation(BinaryOperation operation) {
+		this.operationFuncs.get(operation.getOperand()).accept(operation.getType()); //El accept es de la clase Consumer
 	}
 	
 	private void write(String toWrite) {

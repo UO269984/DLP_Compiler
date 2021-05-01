@@ -5,33 +5,13 @@ import ast.Expresion;
 import ast.expresions.*;
 import ast.types.Types;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.function.Consumer;
-
 public class ValueCGVisitor extends AbstractCGVisitor {
 	
 	private CodeGenerator cg;
-	private Map<String, Consumer<Type>> operationFuncs;
-	
 	private AddressCGVisitor addressVisitor;
 	
 	public ValueCGVisitor(CodeGenerator codeGenerator) {
 		this.cg = codeGenerator;
-		
-		this.operationFuncs = new HashMap<String, Consumer<Type>>();
-		this.operationFuncs.put("+", this.cg::add);
-		this.operationFuncs.put("-", this.cg::sub);
-		this.operationFuncs.put("*", this.cg::mul);
-		this.operationFuncs.put("/", this.cg::div);
-		this.operationFuncs.put("%", this.cg::mod);
-		
-		this.operationFuncs.put(">", this.cg::gt);
-		this.operationFuncs.put("<", this.cg::lt);
-		this.operationFuncs.put(">=", this.cg::ge);
-		this.operationFuncs.put("<=", this.cg::le);
-		this.operationFuncs.put("==", this.cg::eq);
-		this.operationFuncs.put("!=", this.cg::ne);
 	}
 	
 	public void setAddressVisitor(AddressCGVisitor addressVisitor) {
@@ -65,7 +45,7 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 		node.getExpresion2().accept(this, param);
 		this.cg.convertTo(node.getExpresion2().getType(), node.getType());
 		
-		this.operationFuncs.get(node.getOperand()).accept(node.getType()); //El accept es de la clase Consumer
+		this.cg.binaryOperation(node);
 		return param;
 	}
 	
@@ -80,7 +60,7 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	public Object visit(Comparison node, Object param) {
 		node.getExpresion1().accept(this, param);
 		node.getExpresion2().accept(this, param);
-		this.operationFuncs.get(node.getOperand()).accept(node.getType()); //El accept es de la clase Consumer
+		this.cg.binaryOperation(node); //El accept es de la clase Consumer
 		return param;
 	}
 	
