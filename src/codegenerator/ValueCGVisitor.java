@@ -91,11 +91,11 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	value[[FuncCall : funcCall -> param*]]()=
+	value[[FuncCall : funcCall -> funcDef param*]]()=
 		for param in param*
 			value[[param]]()
 		
-		<call> funcCall.name
+		<call> funcDef.name
 	*/
 	@Override
 	public Object visit(FuncCall node, Object param) {
@@ -155,6 +155,7 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	public Object visit(UnaryMinus node, Object param) {
 		this.cg.push(node.getType(), 0);
 		node.getExpresion().accept(this, param);
+		this.cg.convertTo(node.getExpresion().getType(), node.getType());
 		this.cg.add(node.getType());
 		
 		return param;

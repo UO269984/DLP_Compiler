@@ -229,11 +229,11 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	execute[[FuncCall : funcCall ->]]()=
-		value[[funcCall]]()
+	execute[[FuncCall : funcCall -> funcDef param*]]()=
+		value[[(Expression) funcCall]]()
 		
-		if funcCall.type.retType != VoidType
-			<pop> funcCall.type.retType.suffix
+		if ((Expression) funcCall).type.retType != VoidType
+			<pop> ((Expression) funcCall).type.retType.suffix
 	*/
 	@Override
 	public Object visit(FuncCall node, Object param) {

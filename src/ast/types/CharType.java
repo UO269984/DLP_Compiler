@@ -42,6 +42,11 @@ public class CharType extends AbstractType {
 	}
 	
 	@Override
+	public Type arithmetic(ASTNode node) {
+		return Types.getInt();
+	}
+	
+	@Override
 	public Type comparison(Type type, ASTNode node) {
 		return TypesUtil.checkSameTypesRetType(this, type, Types.getInt(), node, "typeError.comparison");
 	}
