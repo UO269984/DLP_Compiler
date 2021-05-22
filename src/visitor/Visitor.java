@@ -24,6 +24,7 @@ public interface Visitor {
 	public Object visit(UnaryMinus node, Object param);
 	public Object visit(BoolNot node, Object param);
 	
+	public Object visit(EmptyExpression node, Object param);
 	public Object visit(IntLiteral node, Object param);
 	public Object visit(CharLiteral node, Object param);
 	public Object visit(DoubleLiteral node, Object param);

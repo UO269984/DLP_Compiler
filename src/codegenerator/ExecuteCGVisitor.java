@@ -87,9 +87,6 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 		for (Statement statement : node.getStatements())
 			statement.accept(this, node);
 		
-		if (funcType.getRetType() == Types.getVoid())
-			new FuncReturn(null, 0, 0).accept(this, node);
-		
 		this.cg.removeIndent();
 		return param;
 	}
@@ -249,9 +246,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 	
 	/*
 	execute[[FuncReturn : ret -> exp]](funcDef)=
-		if exp != null
-			value[[exp]]()
-		
+		value[[exp]]()
 		<ret> exp.type.numberOfBytes funcDef.varsSize funcDef.type.paramsSize
 	*/
 	@Override
@@ -259,14 +254,10 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 		writeLine(node);
 		
 		Expresion retExp = node.getExpresion();
-		int retSize = 0;
-		if (retExp != null) {
-			retExp.accept(this.valueVisitor, param);
-			retSize = retExp.getType().numberOfBytes();
-		}
+		retExp.accept(this.valueVisitor, param);
 		
 		FuncDefinition funcDef = (FuncDefinition) param;
-		this.cg.ret(retSize, funcDef.getVarsSize(), ((FuncType) funcDef.getType()).getParamsSize());
+		this.cg.ret(retExp.getType().numberOfBytes(), funcDef.getVarsSize(), ((FuncType) funcDef.getType()).getParamsSize());
 		return param;
 	}
 	

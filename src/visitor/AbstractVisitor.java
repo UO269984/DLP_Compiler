@@ -80,6 +80,11 @@ public class AbstractVisitor implements Visitor {
 	}
 	
 	@Override
+	public Object visit(EmptyExpression node, Object param) {
+		return param;
+	}
+	
+	@Override
 	public Object visit(IntLiteral node, Object param) {
 		return param;
 	}

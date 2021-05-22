@@ -68,6 +68,11 @@ public abstract class AbstractCGVisitor implements Visitor {
 	}
 	
 	@Override
+	public Object visit(EmptyExpression node, Object param) {
+		throw new IllegalStateException(INVALID_CALL);
+	}
+	
+	@Override
 	public Object visit(IntLiteral node, Object param) {
 		throw new IllegalStateException(INVALID_CALL);
 	}

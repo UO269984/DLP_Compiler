@@ -5,6 +5,7 @@ import ast.statements.VarAssigment;
 import ast.statements.Input;
 import ast.statements.IfCond;
 import ast.statements.WhileLoop;
+import ast.statements.FuncReturn;
 
 import ast.types.FuncType;
 import ast.types.ErrorType;
@@ -48,6 +49,14 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		
 		node.setLValue(true);
 		node.setType(node.getExpresion().getType().structAccess(node.getFieldName(), node));
+		return param;
+	}
+	
+	@Override
+	public Object visit(EmptyExpression node, Object param) {
+		super.visit(node, param);
+		
+		node.setType(Types.getVoid());
 		return param;
 	}
 	
@@ -201,6 +210,14 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		if (! (retType.isBuiltInType() || retType.equals(Types.getVoid())))
 			new ErrorType(ErrorMSG.getMsg("funcDefError.invalidRetType", retType), node.getLine(), node.getColumn());
 		
+		if (funcType.getRetType() == Types.getVoid()) {
+			int numStatements = node.getStatements().size();
+			int line = (numStatements != 0 ? node.getStatements().get(numStatements - 1).getLine() : node.getLine()) + 1;
+			int col = node.getColumn();
+			
+			node.addStatement(new FuncReturn(new EmptyExpression(line, col), line, col));
+		}
+		
 		int paramIndex = 1;
 		for (VarDefinition funcParam : funcType.getParamTypes()) {
 			if (! funcParam.getType().isBuiltInType())
@@ -214,7 +231,16 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 			varDef.accept(this, param);
 		
 		for (Statement statement : node.getStatements())
-			statement.accept(this, param);
+			statement.accept(this, node);
+		
+		return param;
+	}
+	
+	@Override
+	public Object visit(FuncReturn node, Object param) {
+		super.visit(node, param);
+		Type retType = ((FuncType) ((FuncDefinition) param).getType()).getRetType();
+		node.getExpresion().getType().promotesTo(retType, node);
 		
 		return param;
 	}

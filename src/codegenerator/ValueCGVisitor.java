@@ -174,6 +174,14 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
+	value[[EmptyExpression : expression -> ]]()=
+	*/
+	@Override
+	public Object visit(EmptyExpression node, Object param) {
+		return param;
+	}
+	
+	/*
 	value[[IntLiteral : intLiteral -> literal]]()=
 		<push> intLiteral.type.suffix literal
 	*/
