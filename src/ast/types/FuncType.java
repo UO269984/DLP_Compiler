@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import ast.Expresion;
+import ast.Expression;
 import ast.Type;
 import ast.VarDefinition;
 import ast.ASTNode;
@@ -44,18 +44,18 @@ public class FuncType extends ComposedType {
 	}
 	
 	@Override
-	public Type funcCall(List<Expresion> params, ASTNode node) {
+	public Type funcCall(List<Expression> params, ASTNode node) {
 		if (params.size() != this.paramsTypes.size())
 			return new ErrorType(ErrorMSG.getMsg("funcCallError.numParams", this.paramsTypes.size(), params.size()),
 				node.getLine(), node.getColumn());
 		
 		else {
 			Iterator<VarDefinition> expectedParamsIt = this.paramsTypes.iterator();
-			Iterator<Expresion> recvParamsIt = params.iterator();
+			Iterator<Expression> recvParamsIt = params.iterator();
 			
 			for (int i = 1; expectedParamsIt.hasNext(); i++) {
 				VarDefinition curExpectedParam = expectedParamsIt.next();
-				Expresion curRecvParam = recvParamsIt.next();
+				Expression curRecvParam = recvParamsIt.next();
 				
 				if (! curExpectedParam.getType().equals(curRecvParam.getType()))
 					new ErrorType(ErrorMSG.getMsg("funcCallError.typeParam",

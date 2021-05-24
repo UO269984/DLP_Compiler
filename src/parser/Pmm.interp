@@ -103,11 +103,11 @@ statement
 ifStatement
 statement_main
 statements_block
-expresionList
+expressionList
 type
 buitInType
 struct
-expresion
+expression
 funcCall
 funcCallParams
 

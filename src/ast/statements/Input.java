@@ -2,13 +2,13 @@ package ast.statements;
 
 import java.util.List;
 
-import ast.Expresion;
+import ast.Expression;
 import visitor.Visitor;
 
 public class Input extends StatementListExp {
 	
-	public Input(List<Expresion> expresions, int line, int column) {
-		super(expresions, line, column);
+	public Input(List<Expression> expressions, int line, int column) {
+		super(expressions, line, column);
 	}
 	
 	@Override

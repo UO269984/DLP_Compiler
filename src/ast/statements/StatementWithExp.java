@@ -2,17 +2,17 @@ package ast.statements;
 
 import ast.PosASTNode;
 import ast.Statement;
-import ast.Expresion;
+import ast.Expression;
 
 public abstract class StatementWithExp extends PosASTNode implements Statement {
-	private Expresion expresion;
+	private Expression expression;
 	
-	public StatementWithExp(Expresion expresion, int line, int column) {
+	public StatementWithExp(Expression expression, int line, int column) {
 		super(line, column);
-		this.expresion = expresion;
+		this.expression = expression;
 	}
 	
-	public Expresion getExpresion() {
-		return this.expresion;
+	public Expression getExpression() {
+		return this.expression;
 	}
 }

@@ -3,7 +3,7 @@ package ast.types;
 import ast.ASTNode;
 import ast.PosASTNode;
 import ast.Type;
-import ast.Expresion;
+import ast.Expression;
 
 import util.ErrorMSG;
 
@@ -89,7 +89,7 @@ public abstract class AbstractType extends PosASTNode implements Type {
 	}
 	
 	@Override
-	public Type funcCall(List<Expresion> params, ASTNode node) {
+	public Type funcCall(List<Expression> params, ASTNode node) {
 		return createErrorOneType(node, "typeError.funcCall");
 	}
 	

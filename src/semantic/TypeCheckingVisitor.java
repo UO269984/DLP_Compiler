@@ -11,8 +11,8 @@ import ast.types.FuncType;
 import ast.types.ErrorType;
 import errorhandler.EH;
 
-import ast.Expresion;
-import ast.expresions.*;
+import ast.Expression;
+import ast.expressions.*;
 
 import ast.VarDefinition;
 import ast.FuncDefinition;
@@ -39,7 +39,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		super.visit(node, param);
 		
 		node.setLValue(true);
-		node.setType(node.getExpresion1().getType().arrayAccess(node.getExpresion2().getType(), node));
+		node.setType(node.getExpression1().getType().arrayAccess(node.getExpression2().getType(), node));
 		return param;
 	}
 	
@@ -48,7 +48,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		super.visit(node, param);
 		
 		node.setLValue(true);
-		node.setType(node.getExpresion().getType().structAccess(node.getFieldName(), node));
+		node.setType(node.getExpression().getType().structAccess(node.getFieldName(), node));
 		return param;
 	}
 	
@@ -88,7 +88,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	public Object visit(Comparison node, Object param) {
 		super.visit(node, param);
 		
-		node.setType(node.getExpresion1().getType().comparison(node.getExpresion2().getType(), node));
+		node.setType(node.getExpression1().getType().comparison(node.getExpression2().getType(), node));
 		return param;
 	}
 	
@@ -96,7 +96,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	public Object visit(LogicOperation node, Object param) {
 		super.visit(node, param);
 		
-		node.setType(node.getExpresion1().getType().logic(node.getExpresion2().getType(), node));
+		node.setType(node.getExpression1().getType().logic(node.getExpression2().getType(), node));
 		return param;
 	}
 	
@@ -104,7 +104,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	public Object visit(BoolNot node, Object param) {
 		super.visit(node, param);
 		
-		node.setType(node.getExpresion().getType().logic(node));
+		node.setType(node.getExpression().getType().logic(node));
 		return param;
 	}
 	
@@ -112,7 +112,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	public Object visit(UnaryMinus node, Object param) {
 		super.visit(node, param);
 		
-		node.setType(node.getExpresion().getType().arithmetic(node));
+		node.setType(node.getExpression().getType().arithmetic(node));
 		return param;
 	}
 	
@@ -120,7 +120,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	public Object visit(Cast node, Object param) {
 		super.visit(node, param);
 		
-		node.setType(node.getExpresion().getType().canBeCastTo(node.getCastType(), node));
+		node.setType(node.getExpression().getType().canBeCastTo(node.getCastType(), node));
 		return param;
 	}
 	
@@ -128,7 +128,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	public Object visit(Arithmetic node, Object param) {
 		super.visit(node, param);
 		
-		node.setType(node.getExpresion1().getType().arithmetic(node.getExpresion2().getType(), node));
+		node.setType(node.getExpression1().getType().arithmetic(node.getExpression2().getType(), node));
 		return param;
 	}
 	
@@ -147,8 +147,8 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	
 	@Override
 	public Object visit(IfCond node, Object param) {
-		node.getExpresion().accept(this, param);
-		checkLogicExp(node.getExpresion(), "'if' condition");
+		node.getExpression().accept(this, param);
+		checkLogicExp(node.getExpression(), "'if' condition");
 		
 		for (Statement statement : node.getIfStatements())
 			statement.accept(this, param);
@@ -161,8 +161,8 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	
 	@Override
 	public Object visit(WhileLoop node, Object param) {
-		node.getExpresion().accept(this, param);
-		checkLogicExp(node.getExpresion(), "'while' loop");
+		node.getExpression().accept(this, param);
+		checkLogicExp(node.getExpression(), "'while' loop");
 		
 		for (Statement statement : node.getWhileStatements())
 			statement.accept(this, param);
@@ -170,7 +170,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		return param;
 	}
 	
-	private void checkLogicExp(Expresion exp, String statementName) {
+	private void checkLogicExp(Expression exp, String statementName) {
 		if (! exp.getType().isLogical())
 			new ErrorType(ErrorMSG.getMsg("typeInStatement.notLogic", statementName), exp.getLine(), exp.getColumn());
 	}
@@ -179,7 +179,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	public Object visit(VarAssigment node, Object param) {
 		super.visit(node, param);
 		
-		Expresion toAsign = node.getToAsign();
+		Expression toAsign = node.getToAsign();
 		if (! toAsign.getLValue())
 			createLValueError(toAsign);
 		
@@ -191,7 +191,7 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	public Object visit(Input node, Object param) {
 		super.visit(node, param);
 		
-		for (Expresion exp : node.getExpresions()) {
+		for (Expression exp : node.getExpressions()) {
 			if (! exp.getLValue())
 				createLValueError(exp);
 		}
@@ -240,14 +240,14 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 	public Object visit(FuncReturn node, Object param) {
 		super.visit(node, param);
 		Type retType = ((FuncType) ((FuncDefinition) param).getType()).getRetType();
-		node.getExpresion().getType().promotesTo(retType, node);
+		node.getExpression().getType().promotesTo(retType, node);
 		
 		return param;
 	}
 	
-	private void createLValueError(Expresion exp) {
-		String[] expresionName = exp.getClass().getName().split("\\.");
-		new ErrorType(ErrorMSG.getMsg("LValueError", expresionName[expresionName.length - 1]), exp.getLine(), exp.getColumn());
+	private void createLValueError(Expression exp) {
+		String[] expressionName = exp.getClass().getName().split("\\.");
+		new ErrorType(ErrorMSG.getMsg("LValueError", expressionName[expressionName.length - 1]), exp.getLine(), exp.getColumn());
 	}
 	
 	private Type createNotDefinedError(ExpressionWithDefinition exp) {

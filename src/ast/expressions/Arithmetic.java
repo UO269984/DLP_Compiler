@@ -1,11 +1,11 @@
-package ast.expresions;
+package ast.expressions;
 
-import ast.Expresion;
+import ast.Expression;
 import visitor.Visitor;
 
 public class Arithmetic extends BinaryOperation {
 	
-	public Arithmetic(Expresion left, Expresion right, String operator, int line, int column) {
+	public Arithmetic(Expression left, Expression right, String operator, int line, int column) {
 		super(left, right, operator, line, column);
 	}
 	

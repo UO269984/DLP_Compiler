@@ -4,7 +4,7 @@ package parser;
 	import ast.*;
 	import ast.types.*;
 	import ast.statements.*;
-	import ast.expresions.*;
+	import ast.expressions.*;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -33,14 +33,14 @@ public class PmmParser extends Parser {
 	public static final int
 		RULE_program = 0, RULE_varDef = 1, RULE_paramDef = 2, RULE_paramsDef = 3, 
 		RULE_funcDef = 4, RULE_mainDef = 5, RULE_statement = 6, RULE_ifStatement = 7, 
-		RULE_statement_main = 8, RULE_statements_block = 9, RULE_expresionList = 10, 
-		RULE_type = 11, RULE_buitInType = 12, RULE_struct = 13, RULE_expresion = 14, 
+		RULE_statement_main = 8, RULE_statements_block = 9, RULE_expressionList = 10, 
+		RULE_type = 11, RULE_buitInType = 12, RULE_struct = 13, RULE_expression = 14, 
 		RULE_funcCall = 15, RULE_funcCallParams = 16;
 	private static String[] makeRuleNames() {
 		return new String[] {
 			"program", "varDef", "paramDef", "paramsDef", "funcDef", "mainDef", "statement", 
-			"ifStatement", "statement_main", "statements_block", "expresionList", 
-			"type", "buitInType", "struct", "expresion", "funcCall", "funcCallParams"
+			"ifStatement", "statement_main", "statements_block", "expressionList", 
+			"type", "buitInType", "struct", "expression", "funcCall", "funcCallParams"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -609,7 +609,7 @@ public class PmmParser extends Parser {
 		public Statement_mainContext statement_main;
 		public IfStatementContext ifStatement;
 		public Token whileKey;
-		public ExpresionContext expresion;
+		public ExpressionContext expression;
 		public Statements_blockContext statements_block;
 		public Statement_mainContext statement_main() {
 			return getRuleContext(Statement_mainContext.class,0);
@@ -617,8 +617,8 @@ public class PmmParser extends Parser {
 		public IfStatementContext ifStatement() {
 			return getRuleContext(IfStatementContext.class,0);
 		}
-		public ExpresionContext expresion() {
-			return getRuleContext(ExpresionContext.class,0);
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
 		}
 		public Statements_blockContext statements_block() {
 			return getRuleContext(Statements_blockContext.class,0);
@@ -669,13 +669,13 @@ public class PmmParser extends Parser {
 				setState(153);
 				((StatementContext)_localctx).whileKey = match(T__9);
 				setState(154);
-				((StatementContext)_localctx).expresion = expresion(0);
+				((StatementContext)_localctx).expression = expression(0);
 				setState(155);
 				match(T__1);
 				setState(156);
 				((StatementContext)_localctx).statements_block = statements_block();
 
-							((StatementContext)_localctx).ast =  new WhileLoop(((StatementContext)_localctx).expresion.ast, ((StatementContext)_localctx).statements_block.ast, ((StatementContext)_localctx).whileKey.getLine(), ((StatementContext)_localctx).whileKey.getCharPositionInLine());
+							((StatementContext)_localctx).ast =  new WhileLoop(((StatementContext)_localctx).expression.ast, ((StatementContext)_localctx).statements_block.ast, ((StatementContext)_localctx).whileKey.getLine(), ((StatementContext)_localctx).whileKey.getCharPositionInLine());
 						
 				}
 				break;
@@ -697,11 +697,11 @@ public class PmmParser extends Parser {
 	public static class IfStatementContext extends ParserRuleContext {
 		public IfCond ast;
 		public Token ifKey;
-		public ExpresionContext expresion;
+		public ExpressionContext expression;
 		public Statements_blockContext ifStatements;
 		public Statements_blockContext elseStatements;
-		public ExpresionContext expresion() {
-			return getRuleContext(ExpresionContext.class,0);
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
 		}
 		public List<Statements_blockContext> statements_block() {
 			return getRuleContexts(Statements_blockContext.class);
@@ -724,12 +724,12 @@ public class PmmParser extends Parser {
 			setState(161);
 			((IfStatementContext)_localctx).ifKey = match(T__10);
 			setState(162);
-			((IfStatementContext)_localctx).expresion = expresion(0);
+			((IfStatementContext)_localctx).expression = expression(0);
 			setState(163);
 			match(T__1);
 			setState(164);
 			((IfStatementContext)_localctx).ifStatements = statements_block();
-			((IfStatementContext)_localctx).ast =  new IfCond(((IfStatementContext)_localctx).expresion.ast, ((IfStatementContext)_localctx).ifStatements.ast, ((IfStatementContext)_localctx).ifKey.getLine(), ((IfStatementContext)_localctx).ifKey.getCharPositionInLine());
+			((IfStatementContext)_localctx).ast =  new IfCond(((IfStatementContext)_localctx).expression.ast, ((IfStatementContext)_localctx).ifStatements.ast, ((IfStatementContext)_localctx).ifKey.getLine(), ((IfStatementContext)_localctx).ifKey.getCharPositionInLine());
 			setState(170);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {
@@ -759,21 +759,21 @@ public class PmmParser extends Parser {
 	public static class Statement_mainContext extends ParserRuleContext {
 		public Statement ast;
 		public Token input;
-		public ExpresionListContext expresionList;
+		public ExpressionListContext expressionList;
 		public Token print;
 		public Token ret;
-		public ExpresionContext expresion;
-		public ExpresionContext toAsign;
-		public ExpresionContext value;
+		public ExpressionContext expression;
+		public ExpressionContext toAsign;
+		public ExpressionContext value;
 		public FuncCallContext funcCall;
-		public ExpresionListContext expresionList() {
-			return getRuleContext(ExpresionListContext.class,0);
+		public ExpressionListContext expressionList() {
+			return getRuleContext(ExpressionListContext.class,0);
 		}
-		public List<ExpresionContext> expresion() {
-			return getRuleContexts(ExpresionContext.class);
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
 		}
-		public ExpresionContext expresion(int i) {
-			return getRuleContext(ExpresionContext.class,i);
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
 		}
 		public FuncCallContext funcCall() {
 			return getRuleContext(FuncCallContext.class,0);
@@ -797,8 +797,8 @@ public class PmmParser extends Parser {
 				setState(172);
 				((Statement_mainContext)_localctx).input = match(T__12);
 				setState(173);
-				((Statement_mainContext)_localctx).expresionList = expresionList();
-				((Statement_mainContext)_localctx).ast =  new Input(((Statement_mainContext)_localctx).expresionList.ast, ((Statement_mainContext)_localctx).input.getLine(), ((Statement_mainContext)_localctx).input.getCharPositionInLine());
+				((Statement_mainContext)_localctx).expressionList = expressionList();
+				((Statement_mainContext)_localctx).ast =  new Input(((Statement_mainContext)_localctx).expressionList.ast, ((Statement_mainContext)_localctx).input.getLine(), ((Statement_mainContext)_localctx).input.getCharPositionInLine());
 				}
 				break;
 			case 2:
@@ -807,8 +807,8 @@ public class PmmParser extends Parser {
 				setState(176);
 				((Statement_mainContext)_localctx).print = match(T__13);
 				setState(177);
-				((Statement_mainContext)_localctx).expresionList = expresionList();
-				((Statement_mainContext)_localctx).ast =  new Print(((Statement_mainContext)_localctx).expresionList.ast, ((Statement_mainContext)_localctx).print.getLine(), ((Statement_mainContext)_localctx).print.getCharPositionInLine());
+				((Statement_mainContext)_localctx).expressionList = expressionList();
+				((Statement_mainContext)_localctx).ast =  new Print(((Statement_mainContext)_localctx).expressionList.ast, ((Statement_mainContext)_localctx).print.getLine(), ((Statement_mainContext)_localctx).print.getCharPositionInLine());
 				}
 				break;
 			case 3:
@@ -817,19 +817,19 @@ public class PmmParser extends Parser {
 				setState(180);
 				((Statement_mainContext)_localctx).ret = match(T__14);
 				setState(181);
-				((Statement_mainContext)_localctx).expresion = expresion(0);
-				((Statement_mainContext)_localctx).ast =  new FuncReturn(((Statement_mainContext)_localctx).expresion.ast, ((Statement_mainContext)_localctx).ret.getLine(), ((Statement_mainContext)_localctx).ret.getCharPositionInLine());
+				((Statement_mainContext)_localctx).expression = expression(0);
+				((Statement_mainContext)_localctx).ast =  new FuncReturn(((Statement_mainContext)_localctx).expression.ast, ((Statement_mainContext)_localctx).ret.getLine(), ((Statement_mainContext)_localctx).ret.getCharPositionInLine());
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(184);
-				((Statement_mainContext)_localctx).toAsign = expresion(0);
+				((Statement_mainContext)_localctx).toAsign = expression(0);
 				setState(185);
 				match(T__15);
 				setState(186);
-				((Statement_mainContext)_localctx).value = expresion(0);
+				((Statement_mainContext)_localctx).value = expression(0);
 				((Statement_mainContext)_localctx).ast =  new VarAssigment(((Statement_mainContext)_localctx).toAsign.ast, ((Statement_mainContext)_localctx).value.ast, ((Statement_mainContext)_localctx).toAsign.ast.getLine(), ((Statement_mainContext)_localctx).toAsign.ast.getColumn());
 				}
 				break;
@@ -935,25 +935,25 @@ public class PmmParser extends Parser {
 		return _localctx;
 	}
 
-	public static class ExpresionListContext extends ParserRuleContext {
-		public List<Expresion> ast = new ArrayList<Expresion>();
-		public ExpresionContext expInList;
-		public ExpresionContext lastExp;
-		public List<ExpresionContext> expresion() {
-			return getRuleContexts(ExpresionContext.class);
+	public static class ExpressionListContext extends ParserRuleContext {
+		public List<Expression> ast = new ArrayList<Expression>();
+		public ExpressionContext expInList;
+		public ExpressionContext lastExp;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
 		}
-		public ExpresionContext expresion(int i) {
-			return getRuleContext(ExpresionContext.class,i);
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
 		}
-		public ExpresionListContext(ParserRuleContext parent, int invokingState) {
+		public ExpressionListContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_expresionList; }
+		@Override public int getRuleIndex() { return RULE_expressionList; }
 	}
 
-	public final ExpresionListContext expresionList() throws RecognitionException {
-		ExpresionListContext _localctx = new ExpresionListContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_expresionList);
+	public final ExpressionListContext expressionList() throws RecognitionException {
+		ExpressionListContext _localctx = new ExpressionListContext(_ctx, getState());
+		enterRule(_localctx, 20, RULE_expressionList);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
@@ -966,10 +966,10 @@ public class PmmParser extends Parser {
 					{
 					{
 					setState(209);
-					((ExpresionListContext)_localctx).expInList = expresion(0);
+					((ExpressionListContext)_localctx).expInList = expression(0);
 					setState(210);
 					match(T__0);
-					_localctx.ast.add(((ExpresionListContext)_localctx).expInList.ast);
+					_localctx.ast.add(((ExpressionListContext)_localctx).expInList.ast);
 					}
 					} 
 				}
@@ -978,8 +978,8 @@ public class PmmParser extends Parser {
 				_alt = getInterpreter().adaptivePredict(_input,16,_ctx);
 			}
 			setState(218);
-			((ExpresionListContext)_localctx).lastExp = expresion(0);
-			_localctx.ast.add(((ExpresionListContext)_localctx).lastExp.ast);
+			((ExpressionListContext)_localctx).lastExp = expression(0);
+			_localctx.ast.add(((ExpressionListContext)_localctx).lastExp.ast);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1179,24 +1179,24 @@ public class PmmParser extends Parser {
 		return _localctx;
 	}
 
-	public static class ExpresionContext extends ParserRuleContext {
-		public Expresion ast;
-		public ExpresionContext array;
-		public ExpresionContext structVar;
-		public ExpresionContext exp1;
+	public static class ExpressionContext extends ParserRuleContext {
+		public Expression ast;
+		public ExpressionContext array;
+		public ExpressionContext structVar;
+		public ExpressionContext exp1;
 		public Token INT_CONSTANT;
 		public Token REAL_CONSTANT;
 		public Token CHAR_CONSTANT;
 		public Token ID;
 		public FuncCallContext funcCall;
-		public ExpresionContext expresion;
+		public ExpressionContext expression;
 		public Token lp;
 		public BuitInTypeContext buitInType;
 		public Token minus;
 		public Token not;
 		public Token operand;
-		public ExpresionContext exp2;
-		public ExpresionContext index;
+		public ExpressionContext exp2;
+		public ExpressionContext index;
 		public TerminalNode INT_CONSTANT() { return getToken(PmmParser.INT_CONSTANT, 0); }
 		public TerminalNode REAL_CONSTANT() { return getToken(PmmParser.REAL_CONSTANT, 0); }
 		public TerminalNode CHAR_CONSTANT() { return getToken(PmmParser.CHAR_CONSTANT, 0); }
@@ -1204,32 +1204,32 @@ public class PmmParser extends Parser {
 		public FuncCallContext funcCall() {
 			return getRuleContext(FuncCallContext.class,0);
 		}
-		public List<ExpresionContext> expresion() {
-			return getRuleContexts(ExpresionContext.class);
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
 		}
-		public ExpresionContext expresion(int i) {
-			return getRuleContext(ExpresionContext.class,i);
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
 		}
 		public BuitInTypeContext buitInType() {
 			return getRuleContext(BuitInTypeContext.class,0);
 		}
-		public ExpresionContext(ParserRuleContext parent, int invokingState) {
+		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_expresion; }
+		@Override public int getRuleIndex() { return RULE_expression; }
 	}
 
-	public final ExpresionContext expresion() throws RecognitionException {
-		return expresion(0);
+	public final ExpressionContext expression() throws RecognitionException {
+		return expression(0);
 	}
 
-	private ExpresionContext expresion(int _p) throws RecognitionException {
+	private ExpressionContext expression(int _p) throws RecognitionException {
 		ParserRuleContext _parentctx = _ctx;
 		int _parentState = getState();
-		ExpresionContext _localctx = new ExpresionContext(_ctx, _parentState);
-		ExpresionContext _prevctx = _localctx;
+		ExpressionContext _localctx = new ExpressionContext(_ctx, _parentState);
+		ExpressionContext _prevctx = _localctx;
 		int _startState = 28;
-		enterRecursionRule(_localctx, 28, RULE_expresion, _p);
+		enterRecursionRule(_localctx, 28, RULE_expression, _p);
 		int _la;
 		try {
 			int _alt;
@@ -1241,36 +1241,36 @@ public class PmmParser extends Parser {
 			case 1:
 				{
 				setState(256);
-				((ExpresionContext)_localctx).INT_CONSTANT = match(INT_CONSTANT);
-				((ExpresionContext)_localctx).ast =  new IntLiteral(LexerHelper.lexemeToInt((((ExpresionContext)_localctx).INT_CONSTANT!=null?((ExpresionContext)_localctx).INT_CONSTANT.getText():null)), ((ExpresionContext)_localctx).INT_CONSTANT.getLine(), ((ExpresionContext)_localctx).INT_CONSTANT.getCharPositionInLine());
+				((ExpressionContext)_localctx).INT_CONSTANT = match(INT_CONSTANT);
+				((ExpressionContext)_localctx).ast =  new IntLiteral(LexerHelper.lexemeToInt((((ExpressionContext)_localctx).INT_CONSTANT!=null?((ExpressionContext)_localctx).INT_CONSTANT.getText():null)), ((ExpressionContext)_localctx).INT_CONSTANT.getLine(), ((ExpressionContext)_localctx).INT_CONSTANT.getCharPositionInLine());
 				}
 				break;
 			case 2:
 				{
 				setState(258);
-				((ExpresionContext)_localctx).REAL_CONSTANT = match(REAL_CONSTANT);
-				((ExpresionContext)_localctx).ast =  new DoubleLiteral(LexerHelper.lexemeToReal((((ExpresionContext)_localctx).REAL_CONSTANT!=null?((ExpresionContext)_localctx).REAL_CONSTANT.getText():null)), ((ExpresionContext)_localctx).REAL_CONSTANT.getLine(), ((ExpresionContext)_localctx).REAL_CONSTANT.getCharPositionInLine());
+				((ExpressionContext)_localctx).REAL_CONSTANT = match(REAL_CONSTANT);
+				((ExpressionContext)_localctx).ast =  new DoubleLiteral(LexerHelper.lexemeToReal((((ExpressionContext)_localctx).REAL_CONSTANT!=null?((ExpressionContext)_localctx).REAL_CONSTANT.getText():null)), ((ExpressionContext)_localctx).REAL_CONSTANT.getLine(), ((ExpressionContext)_localctx).REAL_CONSTANT.getCharPositionInLine());
 				}
 				break;
 			case 3:
 				{
 				setState(260);
-				((ExpresionContext)_localctx).CHAR_CONSTANT = match(CHAR_CONSTANT);
-				((ExpresionContext)_localctx).ast =  new CharLiteral(LexerHelper.lexemeToChar((((ExpresionContext)_localctx).CHAR_CONSTANT!=null?((ExpresionContext)_localctx).CHAR_CONSTANT.getText():null)), ((ExpresionContext)_localctx).CHAR_CONSTANT.getLine(), ((ExpresionContext)_localctx).CHAR_CONSTANT.getCharPositionInLine());
+				((ExpressionContext)_localctx).CHAR_CONSTANT = match(CHAR_CONSTANT);
+				((ExpressionContext)_localctx).ast =  new CharLiteral(LexerHelper.lexemeToChar((((ExpressionContext)_localctx).CHAR_CONSTANT!=null?((ExpressionContext)_localctx).CHAR_CONSTANT.getText():null)), ((ExpressionContext)_localctx).CHAR_CONSTANT.getLine(), ((ExpressionContext)_localctx).CHAR_CONSTANT.getCharPositionInLine());
 				}
 				break;
 			case 4:
 				{
 				setState(262);
-				((ExpresionContext)_localctx).ID = match(ID);
-				((ExpresionContext)_localctx).ast =  new Variable((((ExpresionContext)_localctx).ID!=null?((ExpresionContext)_localctx).ID.getText():null), ((ExpresionContext)_localctx).ID.getLine(), ((ExpresionContext)_localctx).ID.getCharPositionInLine());
+				((ExpressionContext)_localctx).ID = match(ID);
+				((ExpressionContext)_localctx).ast =  new Variable((((ExpressionContext)_localctx).ID!=null?((ExpressionContext)_localctx).ID.getText():null), ((ExpressionContext)_localctx).ID.getLine(), ((ExpressionContext)_localctx).ID.getCharPositionInLine());
 				}
 				break;
 			case 5:
 				{
 				setState(264);
-				((ExpresionContext)_localctx).funcCall = funcCall();
-				((ExpresionContext)_localctx).ast =  ((ExpresionContext)_localctx).funcCall.ast;
+				((ExpressionContext)_localctx).funcCall = funcCall();
+				((ExpressionContext)_localctx).ast =  ((ExpressionContext)_localctx).funcCall.ast;
 				}
 				break;
 			case 6:
@@ -1278,41 +1278,41 @@ public class PmmParser extends Parser {
 				setState(267);
 				match(T__4);
 				setState(268);
-				((ExpresionContext)_localctx).expresion = expresion(0);
+				((ExpressionContext)_localctx).expression = expression(0);
 				setState(269);
 				match(T__5);
-				((ExpresionContext)_localctx).ast =  ((ExpresionContext)_localctx).expresion.ast;
+				((ExpressionContext)_localctx).ast =  ((ExpressionContext)_localctx).expression.ast;
 				}
 				break;
 			case 7:
 				{
 				setState(272);
-				((ExpresionContext)_localctx).lp = match(T__4);
+				((ExpressionContext)_localctx).lp = match(T__4);
 				setState(273);
-				((ExpresionContext)_localctx).buitInType = buitInType();
+				((ExpressionContext)_localctx).buitInType = buitInType();
 				setState(274);
 				match(T__5);
 				setState(275);
-				((ExpresionContext)_localctx).expresion = expresion(7);
-				((ExpresionContext)_localctx).ast =  new Cast(((ExpresionContext)_localctx).expresion.ast, ((ExpresionContext)_localctx).buitInType.ast, ((ExpresionContext)_localctx).lp.getLine(), ((ExpresionContext)_localctx).lp.getCharPositionInLine());
+				((ExpressionContext)_localctx).expression = expression(7);
+				((ExpressionContext)_localctx).ast =  new Cast(((ExpressionContext)_localctx).expression.ast, ((ExpressionContext)_localctx).buitInType.ast, ((ExpressionContext)_localctx).lp.getLine(), ((ExpressionContext)_localctx).lp.getCharPositionInLine());
 				}
 				break;
 			case 8:
 				{
 				setState(278);
-				((ExpresionContext)_localctx).minus = match(T__23);
+				((ExpressionContext)_localctx).minus = match(T__23);
 				setState(279);
-				((ExpresionContext)_localctx).expresion = expresion(6);
-				((ExpresionContext)_localctx).ast =  new UnaryMinus(((ExpresionContext)_localctx).expresion.ast, ((ExpresionContext)_localctx).minus.getLine(), ((ExpresionContext)_localctx).minus.getCharPositionInLine());
+				((ExpressionContext)_localctx).expression = expression(6);
+				((ExpressionContext)_localctx).ast =  new UnaryMinus(((ExpressionContext)_localctx).expression.ast, ((ExpressionContext)_localctx).minus.getLine(), ((ExpressionContext)_localctx).minus.getCharPositionInLine());
 				}
 				break;
 			case 9:
 				{
 				setState(282);
-				((ExpresionContext)_localctx).not = match(T__24);
+				((ExpressionContext)_localctx).not = match(T__24);
 				setState(283);
-				((ExpresionContext)_localctx).expresion = expresion(5);
-				((ExpresionContext)_localctx).ast =  new BoolNot(((ExpresionContext)_localctx).expresion.ast, ((ExpresionContext)_localctx).not.getLine(), ((ExpresionContext)_localctx).not.getCharPositionInLine());
+				((ExpressionContext)_localctx).expression = expression(5);
+				((ExpressionContext)_localctx).ast =  new BoolNot(((ExpressionContext)_localctx).expression.ast, ((ExpressionContext)_localctx).not.getLine(), ((ExpressionContext)_localctx).not.getCharPositionInLine());
 				}
 				break;
 			}
@@ -1330,17 +1330,17 @@ public class PmmParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,21,_ctx) ) {
 					case 1:
 						{
-						_localctx = new ExpresionContext(_parentctx, _parentState);
+						_localctx = new ExpressionContext(_parentctx, _parentState);
 						_localctx.exp1 = _prevctx;
 						_localctx.exp1 = _prevctx;
-						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(288);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(289);
-						((ExpresionContext)_localctx).operand = _input.LT(1);
+						((ExpressionContext)_localctx).operand = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__25) | (1L << T__26) | (1L << T__27))) != 0)) ) {
-							((ExpresionContext)_localctx).operand = (Token)_errHandler.recoverInline(this);
+							((ExpressionContext)_localctx).operand = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1348,23 +1348,23 @@ public class PmmParser extends Parser {
 							consume();
 						}
 						setState(290);
-						((ExpresionContext)_localctx).exp2 = ((ExpresionContext)_localctx).expresion = expresion(5);
-						((ExpresionContext)_localctx).ast =  new Arithmetic(((ExpresionContext)_localctx).exp1.ast, ((ExpresionContext)_localctx).exp2.ast, (((ExpresionContext)_localctx).operand!=null?((ExpresionContext)_localctx).operand.getText():null), ((ExpresionContext)_localctx).exp1.ast.getLine(), ((ExpresionContext)_localctx).exp1.ast.getColumn());
+						((ExpressionContext)_localctx).exp2 = ((ExpressionContext)_localctx).expression = expression(5);
+						((ExpressionContext)_localctx).ast =  new Arithmetic(((ExpressionContext)_localctx).exp1.ast, ((ExpressionContext)_localctx).exp2.ast, (((ExpressionContext)_localctx).operand!=null?((ExpressionContext)_localctx).operand.getText():null), ((ExpressionContext)_localctx).exp1.ast.getLine(), ((ExpressionContext)_localctx).exp1.ast.getColumn());
 						}
 						break;
 					case 2:
 						{
-						_localctx = new ExpresionContext(_parentctx, _parentState);
+						_localctx = new ExpressionContext(_parentctx, _parentState);
 						_localctx.exp1 = _prevctx;
 						_localctx.exp1 = _prevctx;
-						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(293);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(294);
-						((ExpresionContext)_localctx).operand = _input.LT(1);
+						((ExpressionContext)_localctx).operand = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__23 || _la==T__28) ) {
-							((ExpresionContext)_localctx).operand = (Token)_errHandler.recoverInline(this);
+							((ExpressionContext)_localctx).operand = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1372,23 +1372,23 @@ public class PmmParser extends Parser {
 							consume();
 						}
 						setState(295);
-						((ExpresionContext)_localctx).exp2 = ((ExpresionContext)_localctx).expresion = expresion(4);
-						((ExpresionContext)_localctx).ast =  new Arithmetic(((ExpresionContext)_localctx).exp1.ast, ((ExpresionContext)_localctx).exp2.ast, (((ExpresionContext)_localctx).operand!=null?((ExpresionContext)_localctx).operand.getText():null), ((ExpresionContext)_localctx).exp1.ast.getLine(), ((ExpresionContext)_localctx).exp1.ast.getColumn());
+						((ExpressionContext)_localctx).exp2 = ((ExpressionContext)_localctx).expression = expression(4);
+						((ExpressionContext)_localctx).ast =  new Arithmetic(((ExpressionContext)_localctx).exp1.ast, ((ExpressionContext)_localctx).exp2.ast, (((ExpressionContext)_localctx).operand!=null?((ExpressionContext)_localctx).operand.getText():null), ((ExpressionContext)_localctx).exp1.ast.getLine(), ((ExpressionContext)_localctx).exp1.ast.getColumn());
 						}
 						break;
 					case 3:
 						{
-						_localctx = new ExpresionContext(_parentctx, _parentState);
+						_localctx = new ExpressionContext(_parentctx, _parentState);
 						_localctx.exp1 = _prevctx;
 						_localctx.exp1 = _prevctx;
-						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(298);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
 						setState(299);
-						((ExpresionContext)_localctx).operand = _input.LT(1);
+						((ExpressionContext)_localctx).operand = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__29) | (1L << T__30) | (1L << T__31) | (1L << T__32) | (1L << T__33) | (1L << T__34))) != 0)) ) {
-							((ExpresionContext)_localctx).operand = (Token)_errHandler.recoverInline(this);
+							((ExpressionContext)_localctx).operand = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1396,23 +1396,23 @@ public class PmmParser extends Parser {
 							consume();
 						}
 						setState(300);
-						((ExpresionContext)_localctx).exp2 = ((ExpresionContext)_localctx).expresion = expresion(3);
-						((ExpresionContext)_localctx).ast =  new Comparison(((ExpresionContext)_localctx).exp1.ast, ((ExpresionContext)_localctx).exp2.ast, (((ExpresionContext)_localctx).operand!=null?((ExpresionContext)_localctx).operand.getText():null), ((ExpresionContext)_localctx).exp1.ast.getLine(), ((ExpresionContext)_localctx).exp1.ast.getColumn());
+						((ExpressionContext)_localctx).exp2 = ((ExpressionContext)_localctx).expression = expression(3);
+						((ExpressionContext)_localctx).ast =  new Comparison(((ExpressionContext)_localctx).exp1.ast, ((ExpressionContext)_localctx).exp2.ast, (((ExpressionContext)_localctx).operand!=null?((ExpressionContext)_localctx).operand.getText():null), ((ExpressionContext)_localctx).exp1.ast.getLine(), ((ExpressionContext)_localctx).exp1.ast.getColumn());
 						}
 						break;
 					case 4:
 						{
-						_localctx = new ExpresionContext(_parentctx, _parentState);
+						_localctx = new ExpressionContext(_parentctx, _parentState);
 						_localctx.exp1 = _prevctx;
 						_localctx.exp1 = _prevctx;
-						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(303);
 						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
 						setState(304);
-						((ExpresionContext)_localctx).operand = _input.LT(1);
+						((ExpressionContext)_localctx).operand = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__35 || _la==T__36) ) {
-							((ExpresionContext)_localctx).operand = (Token)_errHandler.recoverInline(this);
+							((ExpressionContext)_localctx).operand = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1420,40 +1420,40 @@ public class PmmParser extends Parser {
 							consume();
 						}
 						setState(305);
-						((ExpresionContext)_localctx).exp2 = ((ExpresionContext)_localctx).expresion = expresion(2);
-						((ExpresionContext)_localctx).ast =  new LogicOperation(((ExpresionContext)_localctx).exp1.ast, ((ExpresionContext)_localctx).exp2.ast, (((ExpresionContext)_localctx).operand!=null?((ExpresionContext)_localctx).operand.getText():null), ((ExpresionContext)_localctx).exp1.ast.getLine(), ((ExpresionContext)_localctx).exp1.ast.getColumn());
+						((ExpressionContext)_localctx).exp2 = ((ExpressionContext)_localctx).expression = expression(2);
+						((ExpressionContext)_localctx).ast =  new LogicOperation(((ExpressionContext)_localctx).exp1.ast, ((ExpressionContext)_localctx).exp2.ast, (((ExpressionContext)_localctx).operand!=null?((ExpressionContext)_localctx).operand.getText():null), ((ExpressionContext)_localctx).exp1.ast.getLine(), ((ExpressionContext)_localctx).exp1.ast.getColumn());
 						}
 						break;
 					case 5:
 						{
-						_localctx = new ExpresionContext(_parentctx, _parentState);
+						_localctx = new ExpressionContext(_parentctx, _parentState);
 						_localctx.array = _prevctx;
 						_localctx.array = _prevctx;
-						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(308);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
 						setState(309);
 						match(T__16);
 						setState(310);
-						((ExpresionContext)_localctx).index = ((ExpresionContext)_localctx).expresion = expresion(0);
+						((ExpressionContext)_localctx).index = ((ExpressionContext)_localctx).expression = expression(0);
 						setState(311);
 						match(T__17);
-						((ExpresionContext)_localctx).ast =  new ArrayAccess(((ExpresionContext)_localctx).array.ast, ((ExpresionContext)_localctx).index.ast, ((ExpresionContext)_localctx).array.ast.getLine(), ((ExpresionContext)_localctx).array.ast.getColumn());
+						((ExpressionContext)_localctx).ast =  new ArrayAccess(((ExpressionContext)_localctx).array.ast, ((ExpressionContext)_localctx).index.ast, ((ExpressionContext)_localctx).array.ast.getLine(), ((ExpressionContext)_localctx).array.ast.getColumn());
 						}
 						break;
 					case 6:
 						{
-						_localctx = new ExpresionContext(_parentctx, _parentState);
+						_localctx = new ExpressionContext(_parentctx, _parentState);
 						_localctx.structVar = _prevctx;
 						_localctx.structVar = _prevctx;
-						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(314);
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
 						setState(315);
 						match(T__22);
 						setState(316);
-						((ExpresionContext)_localctx).ID = match(ID);
-						((ExpresionContext)_localctx).ast =  new StructAccess(((ExpresionContext)_localctx).structVar.ast, (((ExpresionContext)_localctx).ID!=null?((ExpresionContext)_localctx).ID.getText():null), ((ExpresionContext)_localctx).structVar.ast.getLine(), ((ExpresionContext)_localctx).structVar.ast.getColumn());
+						((ExpressionContext)_localctx).ID = match(ID);
+						((ExpressionContext)_localctx).ast =  new StructAccess(((ExpressionContext)_localctx).structVar.ast, (((ExpressionContext)_localctx).ID!=null?((ExpressionContext)_localctx).ID.getText():null), ((ExpressionContext)_localctx).structVar.ast.getLine(), ((ExpressionContext)_localctx).structVar.ast.getColumn());
 						}
 						break;
 					}
@@ -1519,10 +1519,10 @@ public class PmmParser extends Parser {
 	}
 
 	public static class FuncCallParamsContext extends ParserRuleContext {
-		public List<Expresion> ast = new ArrayList<Expresion>();
-		public ExpresionListContext expresionList;
-		public ExpresionListContext expresionList() {
-			return getRuleContext(ExpresionListContext.class,0);
+		public List<Expression> ast = new ArrayList<Expression>();
+		public ExpressionListContext expressionList;
+		public ExpressionListContext expressionList() {
+			return getRuleContext(ExpressionListContext.class,0);
 		}
 		public FuncCallParamsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1543,8 +1543,8 @@ public class PmmParser extends Parser {
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__23) | (1L << T__24) | (1L << ID) | (1L << INT_CONSTANT) | (1L << REAL_CONSTANT) | (1L << CHAR_CONSTANT))) != 0)) {
 				{
 				setState(329);
-				((FuncCallParamsContext)_localctx).expresionList = expresionList();
-				((FuncCallParamsContext)_localctx).ast =  ((FuncCallParamsContext)_localctx).expresionList.ast;
+				((FuncCallParamsContext)_localctx).expressionList = expressionList();
+				((FuncCallParamsContext)_localctx).ast =  ((FuncCallParamsContext)_localctx).expressionList.ast;
 				}
 			}
 
@@ -1564,11 +1564,11 @@ public class PmmParser extends Parser {
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
 		case 14:
-			return expresion_sempred((ExpresionContext)_localctx, predIndex);
+			return expression_sempred((ExpressionContext)_localctx, predIndex);
 		}
 		return true;
 	}
-	private boolean expresion_sempred(ExpresionContext _localctx, int predIndex) {
+	private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
 			return precpred(_ctx, 4);

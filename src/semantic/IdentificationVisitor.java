@@ -7,9 +7,9 @@ import ast.Program;
 import ast.Definition;
 import ast.VarDefinition;
 import ast.FuncDefinition;
-import ast.expresions.Variable;
-import ast.expresions.FuncCall;
-import ast.expresions.ExpressionWithDefinition;
+import ast.expressions.Variable;
+import ast.expressions.FuncCall;
+import ast.expressions.ExpressionWithDefinition;
 
 import ast.types.ErrorType;
 import errorhandler.EH;

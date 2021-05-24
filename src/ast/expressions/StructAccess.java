@@ -1,12 +1,12 @@
-package ast.expresions;
+package ast.expressions;
 
-import ast.Expresion;
+import ast.Expression;
 import visitor.Visitor;
 
-public class StructAccess extends UnaryExpresion {
+public class StructAccess extends UnaryExpression {
 	private String fieldName;
 	
-	public StructAccess(Expresion struct, String fieldName, int line, int column) {
+	public StructAccess(Expression struct, String fieldName, int line, int column) {
 		super(struct, line, column);
 		this.fieldName = fieldName;
 	}

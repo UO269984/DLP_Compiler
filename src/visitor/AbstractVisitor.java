@@ -1,10 +1,10 @@
 package visitor;
 
-import ast.expresions.*;
+import ast.expressions.*;
 import ast.statements.*;
 import ast.types.*;
 
-import ast.Expresion;
+import ast.Expression;
 import ast.Statement;
 import ast.Definition;
 import ast.VarDefinition;
@@ -20,28 +20,28 @@ public class AbstractVisitor implements Visitor {
 	
 	@Override
 	public Object visit(Arithmetic node, Object param) {
-		node.getExpresion1().accept(this, param);
-		node.getExpresion2().accept(this, param);
+		node.getExpression1().accept(this, param);
+		node.getExpression2().accept(this, param);
 		return param;
 	}
 	
 	@Override
 	public Object visit(Comparison node, Object param) {
-		node.getExpresion1().accept(this, param);
-		node.getExpresion2().accept(this, param);
+		node.getExpression1().accept(this, param);
+		node.getExpression2().accept(this, param);
 		return param;
 	}
 	
 	@Override
 	public Object visit(LogicOperation node, Object param) {
-		node.getExpresion1().accept(this, param);
-		node.getExpresion2().accept(this, param);
+		node.getExpression1().accept(this, param);
+		node.getExpression2().accept(this, param);
 		return param;
 	}
 	
 	@Override
 	public Object visit(FuncCall node, Object param) {
-		for (Expresion funcParam : node.getParams())
+		for (Expression funcParam : node.getParams())
 			funcParam.accept(this, param);
 		
 		return param;
@@ -49,33 +49,33 @@ public class AbstractVisitor implements Visitor {
 	
 	@Override
 	public Object visit(ArrayAccess node, Object param) {
-		node.getExpresion1().accept(this, param);
-		node.getExpresion2().accept(this, param);
+		node.getExpression1().accept(this, param);
+		node.getExpression2().accept(this, param);
 		return param;
 	}
 	
 	@Override
 	public Object visit(StructAccess node, Object param) {
-		node.getExpresion().accept(this, param);
+		node.getExpression().accept(this, param);
 		return param;
 	}
 	
 	@Override
 	public Object visit(Cast node, Object param) {
 		node.getCastType().accept(this, param);
-		node.getExpresion().accept(this, param);
+		node.getExpression().accept(this, param);
 		return param;
 	}
 	
 	@Override
 	public Object visit(UnaryMinus node, Object param) {
-		node.getExpresion().accept(this, param);
+		node.getExpression().accept(this, param);
 		return param;
 	}
 	
 	@Override
 	public Object visit(BoolNot node, Object param) {
-		node.getExpresion().accept(this, param);
+		node.getExpression().accept(this, param);
 		return param;
 	}
 	
@@ -108,13 +108,13 @@ public class AbstractVisitor implements Visitor {
 	
 	@Override
 	public Object visit(FuncReturn node, Object param) {
-		node.getExpresion().accept(this, param);
+		node.getExpression().accept(this, param);
 		return param;
 	}
 	
 	@Override
 	public Object visit(IfCond node, Object param) {
-		node.getExpresion().accept(this, param);
+		node.getExpression().accept(this, param);
 		
 		for (Statement statement : node.getIfStatements())
 			statement.accept(this, param);
@@ -127,7 +127,7 @@ public class AbstractVisitor implements Visitor {
 	
 	@Override
 	public Object visit(WhileLoop node, Object param) {
-		node.getExpresion().accept(this, param);
+		node.getExpression().accept(this, param);
 		
 		for (Statement statement : node.getWhileStatements())
 			statement.accept(this, param);
@@ -137,7 +137,7 @@ public class AbstractVisitor implements Visitor {
 	
 	@Override
 	public Object visit(Print node, Object param) {
-		for (Expresion exp : node.getExpresions())
+		for (Expression exp : node.getExpressions())
 			exp.accept(this, param);
 		
 		return param;
@@ -145,7 +145,7 @@ public class AbstractVisitor implements Visitor {
 	
 	@Override
 	public Object visit(Input node, Object param) {
-		for (Expresion exp : node.getExpresions())
+		for (Expression exp : node.getExpressions())
 			exp.accept(this, param);
 		
 		return param;

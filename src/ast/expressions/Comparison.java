@@ -1,11 +1,11 @@
-package ast.expresions;
+package ast.expressions;
 
-import ast.Expresion;
+import ast.Expression;
 import visitor.Visitor;
 
 public class Comparison extends BinaryOperation {
 	
-	public Comparison(Expresion left, Expresion right, String operand, int line, int column) {
+	public Comparison(Expression left, Expression right, String operand, int line, int column) {
 		super(left, right, operand, line, column);
 	}
 	

@@ -2,9 +2,9 @@ package codegenerator;
 
 import ast.types.Types;
 import ast.types.StructType;
-import ast.expresions.Variable;
-import ast.expresions.ArrayAccess;
-import ast.expresions.StructAccess;
+import ast.expressions.Variable;
+import ast.expressions.ArrayAccess;
+import ast.expressions.StructAccess;
 import ast.VarDefinition;
 
 public class AddressCGVisitor extends AbstractCGVisitor {
@@ -55,8 +55,8 @@ public class AddressCGVisitor extends AbstractCGVisitor {
 	*/
 	@Override
 	public Object visit(ArrayAccess node, Object param) {
-		node.getExpresion1().accept(this, param);
-		node.getExpresion2().accept(this.valueVisitor, param);
+		node.getExpression1().accept(this, param);
+		node.getExpression2().accept(this.valueVisitor, param);
 		this.cg.push(node.getType().numberOfBytes());
 		this.cg.mul(Types.getInt());
 		
@@ -72,8 +72,8 @@ public class AddressCGVisitor extends AbstractCGVisitor {
 	*/
 	@Override
 	public Object visit(StructAccess node, Object param) {
-		node.getExpresion().accept(this, param);
-		this.cg.push(((StructType) node.getExpresion().getType()).getFieldOffset(node.getFieldName()));
+		node.getExpression().accept(this, param);
+		this.cg.push(((StructType) node.getExpression().getType()).getFieldOffset(node.getFieldName()));
 		this.cg.add();
 		
 		return param;

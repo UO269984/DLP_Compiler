@@ -5,17 +5,17 @@ import java.util.ArrayList;
 
 import ast.PosASTNode;
 import ast.Statement;
-import ast.Expresion;
+import ast.Expression;
 
 public abstract class StatementListExp extends PosASTNode implements Statement {
-	private List<Expresion> expresions;
+	private List<Expression> expressions;
 	
-	public StatementListExp(List<Expresion> expresions, int line, int column) {
+	public StatementListExp(List<Expression> expressions, int line, int column) {
 		super(line, column);
-		this.expresions = expresions;
+		this.expressions = expressions;
 	}
 	
-	public List<Expresion> getExpresions() {
-		return this.expresions;
+	public List<Expression> getExpressions() {
+		return this.expressions;
 	}
 }

@@ -2,24 +2,24 @@ package ast.statements;
 
 import ast.PosASTNode;
 import ast.Statement;
-import ast.Expresion;
+import ast.Expression;
 import visitor.Visitor;
 
 public class VarAssigment extends PosASTNode implements Statement {
-	private Expresion toAsign;
-	private Expresion value;
+	private Expression toAsign;
+	private Expression value;
 	
-	public VarAssigment(Expresion toAsign, Expresion value, int line, int column) {
+	public VarAssigment(Expression toAsign, Expression value, int line, int column) {
 		super(line, column);
 		this.toAsign = toAsign;
 		this.value = value;
 	}
 	
-	public Expresion getToAsign() {
+	public Expression getToAsign() {
 		return this.toAsign;
 	}
 	
-	public Expresion getValue() {
+	public Expression getValue() {
 		return this.value;
 	}
 	

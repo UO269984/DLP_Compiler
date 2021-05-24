@@ -1,6 +1,6 @@
 package visitor;
 
-import ast.expresions.*;
+import ast.expressions.*;
 import ast.statements.*;
 import ast.types.*;
 

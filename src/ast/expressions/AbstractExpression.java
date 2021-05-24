@@ -1,10 +1,10 @@
-package ast.expresions;
+package ast.expressions;
 
 import ast.Type;
 import ast.PosASTNode;
-import ast.Expresion;
+import ast.Expression;
 
-public abstract class AbstractExpression extends PosASTNode implements Expresion {
+public abstract class AbstractExpression extends PosASTNode implements Expression {
 	private boolean lValue;
 	private Type type;
 	

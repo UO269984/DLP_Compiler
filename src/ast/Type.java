@@ -19,5 +19,5 @@ public interface Type extends ASTNode {
 	public Type canBeCastTo(Type type, ASTNode node);
 	public Type arrayAccess(Type type, ASTNode node);
 	public Type structAccess(String fieldName, ASTNode node);
-	public Type funcCall(List<Expresion> params, ASTNode node);
+	public Type funcCall(List<Expression> params, ASTNode node);
 }

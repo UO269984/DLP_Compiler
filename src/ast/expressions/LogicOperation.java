@@ -1,11 +1,11 @@
-package ast.expresions;
+package ast.expressions;
 
-import ast.Expresion;
+import ast.Expression;
 import visitor.Visitor;
 
 public class LogicOperation extends BinaryOperation {
 	
-	public LogicOperation(Expresion left, Expresion right, String operand, int line, int column) {
+	public LogicOperation(Expression left, Expression right, String operand, int line, int column) {
 		super(left, right, operand, line, column);
 	}
 	

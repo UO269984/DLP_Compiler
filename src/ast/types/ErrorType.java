@@ -2,7 +2,7 @@ package ast.types;
 
 import java.util.List;
 
-import ast.Expresion;
+import ast.Expression;
 import ast.Type;
 import ast.ASTNode;
 
@@ -75,7 +75,7 @@ public class ErrorType extends AbstractType {
 	}
 	
 	@Override
-	public Type funcCall(List<Expresion> params, ASTNode node) {
+	public Type funcCall(List<Expression> params, ASTNode node) {
 		return this;
 	}
 	

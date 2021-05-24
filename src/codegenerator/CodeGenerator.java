@@ -2,8 +2,8 @@ package codegenerator;
 
 import ast.Type;
 import ast.types.Types;
-import ast.expresions.Cast;
-import ast.expresions.BinaryOperation;
+import ast.expressions.Cast;
+import ast.expressions.BinaryOperation;
 import ast.VarDefinition;
 
 import java.util.Collections;

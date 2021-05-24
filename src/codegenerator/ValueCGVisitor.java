@@ -1,8 +1,8 @@
 package codegenerator;
 
 import ast.Type;
-import ast.Expresion;
-import ast.expresions.*;
+import ast.Expression;
+import ast.expressions.*;
 import ast.types.Types;
 
 public class ValueCGVisitor extends AbstractCGVisitor {
@@ -39,11 +39,11 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	*/
 	@Override
 	public Object visit(Arithmetic node, Object param) {
-		node.getExpresion1().accept(this, param);
-		this.cg.convertTo(node.getExpresion1().getType(), node.getType());
+		node.getExpression1().accept(this, param);
+		this.cg.convertTo(node.getExpression1().getType(), node.getType());
 		
-		node.getExpresion2().accept(this, param);
-		this.cg.convertTo(node.getExpresion2().getType(), node.getType());
+		node.getExpression2().accept(this, param);
+		this.cg.convertTo(node.getExpression2().getType(), node.getType());
 		
 		this.cg.binaryOperation(node);
 		return param;
@@ -58,8 +58,8 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	*/
 	@Override
 	public Object visit(Comparison node, Object param) {
-		node.getExpresion1().accept(this, param);
-		node.getExpresion2().accept(this, param);
+		node.getExpression1().accept(this, param);
+		node.getExpression2().accept(this, param);
 		this.cg.binaryOperation(node); //El accept es de la clase Consumer
 		return param;
 	}
@@ -77,8 +77,8 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	*/
 	@Override
 	public Object visit(LogicOperation node, Object param) {
-		node.getExpresion1().accept(this, param);
-		node.getExpresion2().accept(this, param);
+		node.getExpression1().accept(this, param);
+		node.getExpression2().accept(this, param);
 		
 		switch (node.getOperand()) {
 			case "&&":
@@ -104,7 +104,7 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	*/
 	@Override
 	public Object visit(FuncCall node, Object param) {
-		for (Expresion callParam : node.getParams())
+		for (Expression callParam : node.getParams())
 			callParam.accept(this, param);
 		
 		this.cg.call(node.getName());
@@ -133,7 +133,7 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 		return param;
 	}
 	
-	private void loadExpression(Expresion exp, Object param) {
+	private void loadExpression(Expression exp, Object param) {
 		exp.accept(this.addressVisitor, param);
 		this.cg.load(exp.getType());
 	}
@@ -145,8 +145,8 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	*/
 	@Override
 	public Object visit(Cast node, Object param) {
-		node.getExpresion().accept(this, param);
-		this.cg.convertTo(node.getExpresion().getType(), node.getType());
+		node.getExpression().accept(this, param);
+		this.cg.convertTo(node.getExpression().getType(), node.getType());
 		return param;
 	}
 	
@@ -160,8 +160,8 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	@Override
 	public Object visit(UnaryMinus node, Object param) {
 		this.cg.push(node.getType(), 0);
-		node.getExpresion().accept(this, param);
-		this.cg.convertTo(node.getExpresion().getType(), node.getType());
+		node.getExpression().accept(this, param);
+		this.cg.convertTo(node.getExpression().getType(), node.getType());
 		this.cg.sub(node.getType());
 		
 		return param;
@@ -174,7 +174,7 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	*/
 	@Override
 	public Object visit(BoolNot node, Object param) {
-		node.getExpresion().accept(this, param);
+		node.getExpression().accept(this, param);
 		this.cg.not();
 		return param;
 	}

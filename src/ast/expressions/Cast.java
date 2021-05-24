@@ -1,14 +1,14 @@
-package ast.expresions;
+package ast.expressions;
 
-import ast.Expresion;
+import ast.Expression;
 import ast.Type;
 import visitor.Visitor;
 
-public class Cast extends UnaryExpresion {
+public class Cast extends UnaryExpression {
 	private Type castType;
 	
-	public Cast(Expresion expresion, Type castType, int line, int column) {
-		super(expresion, line, column);
+	public Cast(Expression expression, Type castType, int line, int column) {
+		super(expression, line, column);
 		this.castType = castType;
 	}
 	

@@ -4,7 +4,7 @@ package parser;
 	import ast.*;
 	import ast.types.*;
 	import ast.statements.*;
-	import ast.expresions.*;
+	import ast.expressions.*;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

@@ -1,4 +1,4 @@
-package ast.expresions;
+package ast.expressions;
 
 import ast.Definition;
 

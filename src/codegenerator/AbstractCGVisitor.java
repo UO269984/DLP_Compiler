@@ -2,11 +2,10 @@ package codegenerator;
 
 import visitor.Visitor;
 
-import ast.expresions.*;
+import ast.expressions.*;
 import ast.statements.*;
 import ast.types.*;
 
-import ast.Expresion;
 import ast.Statement;
 import ast.Definition;
 import ast.VarDefinition;

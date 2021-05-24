@@ -2,13 +2,13 @@ package ast.statements;
 
 import java.util.List;
 
-import ast.Expresion;
+import ast.Expression;
 import visitor.Visitor;
 
 public class Print extends StatementListExp {
 	
-	public Print(List<Expresion> expresions, int line, int column) {
-		super(expresions, line, column);
+	public Print(List<Expression> expressions, int line, int column) {
+		super(expressions, line, column);
 	}
 	
 	@Override

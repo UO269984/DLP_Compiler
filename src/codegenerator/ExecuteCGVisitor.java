@@ -3,13 +3,13 @@ package codegenerator;
 import ast.ASTNode;
 import ast.Program;
 import ast.Statement;
-import ast.Expresion;
+import ast.Expression;
 import ast.Type;
 import ast.Definition;
 import ast.VarDefinition;
 import ast.FuncDefinition;
 
-import ast.expresions.FuncCall;
+import ast.expressions.FuncCall;
 import ast.types.FuncType;
 import ast.types.Types;
 import ast.statements.*;
@@ -119,7 +119,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 		this.cg.label("whileStart", labelNum);
 		this.cg.addIndent();
 		
-		node.getExpresion().accept(this.valueVisitor, param);
+		node.getExpression().accept(this.valueVisitor, param);
 		this.cg.jz("whileEnd", labelNum);
 		
 		for (Statement whileStatement : node.getWhileStatements())
@@ -154,7 +154,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 		int labelNum = this.cg.getLabelCount();
 		this.cg.addIndent();
 		
-		node.getExpresion().accept(this.valueVisitor, param);
+		node.getExpression().accept(this.valueVisitor, param);
 		this.cg.jz("elseStart", labelNum);
 		
 		for (Statement ifStatement : node.getIfStatements())
@@ -184,7 +184,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 	public Object visit(Input node, Object param) {
 		writeLine(node);
 		
-		for (Expresion exp : node.getExpresions()) {
+		for (Expression exp : node.getExpressions()) {
 			exp.accept(this.addressVisitor, param);
 			this.cg.in(exp.getType());
 			this.cg.store(exp.getType());
@@ -203,7 +203,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 	public Object visit(Print node, Object param) {
 		writeLine(node);
 		
-		for (Expresion exp : node.getExpresions()) {
+		for (Expression exp : node.getExpressions()) {
 			exp.accept(this.valueVisitor, param);
 			this.cg.out(exp.getType());
 		}
@@ -256,7 +256,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 	public Object visit(FuncReturn node, Object param) {
 		writeLine(node);
 		
-		Expresion retExp = node.getExpresion();
+		Expression retExp = node.getExpression();
 		retExp.accept(this.valueVisitor, param);
 		
 		FuncDefinition funcDef = (FuncDefinition) param;

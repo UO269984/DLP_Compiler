@@ -1,12 +1,12 @@
-package ast.statements;
+package ast.expressions;
 
 import ast.Expression;
 import visitor.Visitor;
 
-public class FuncReturn extends StatementWithExp {
+public class BoolNot extends UnaryExpression {
 	
-	public FuncReturn(Expression retExp, int line, int column) {
-		super(retExp, line, column);
+	public BoolNot(Expression expression, int line, int column) {
+		super(expression, line, column);
 	}
 	
 	@Override
