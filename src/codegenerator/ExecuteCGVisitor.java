@@ -62,9 +62,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	execute[[FuncDefinition : def -> name statement*]]()=
+	execute[[FuncDefinition : definition -> name varDefinition* statement*]]()=
 		<label> name
-		<enter> def.getLocalsSize()
+		<enter> definition.getLocalsSize()
 		for statement in statement*
 			execute[[statement]]()
 	*/
@@ -92,7 +92,16 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	execute[[WhileLoop loop -> condition statement*]]()=
+	execute[[VarDefinition : definition -> name]]()=
+	*/
+	@Override
+	public Object visit(VarDefinition node, Object param) {
+		this.cg.varInfo(node);
+		return param;
+	}
+	
+	/*
+	execute[[WhileLoop : statement -> condition statement*]]()=
 		int label = cg.getLabel()
 		
 		inicioWhile label:
@@ -124,10 +133,10 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	execute[[IfCond condStatement -> cond ifStatements* elseStatements*]]()=
+	execute[[IfCond : statement -> condition ifStatements* elseStatements*]]()=
 		int label = cg.getLabel()
 		
-		value[[cond]]()
+		value[[condition]]()
 		jz else label
 			for statement in ifStatements*
 				execute[[statement]]()
@@ -164,15 +173,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 		return param;
 	}
 	
-	@Override
-	public Object visit(VarDefinition node, Object param) {
-		this.cg.varInfo(node);
-		return param;
-	}
-	
 	/*
-	execute[[Input : inputStatement -> exp*]]()=
-		for exp in exp*
+	execute[[Input : statement -> expression*]]()=
+		for exp in expression*
 			address[[exp]]()
 			<in> exp.type.suffix
 			<store> exp.type.suffix
@@ -191,8 +194,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	execute[[Print : printStatement -> exp*]]()=
-		for exp in exp*
+	execute[[Print : statement -> expression*]]()=
+		for exp in expression*
 			value[[exp]]()
 			<out> exp.type.suffix
 	*/
@@ -209,7 +212,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	execute[[VarAssigment : assign -> toAssign value]]()=
+	execute[[VarAssigment : statement -> toAssign value]]()=
 		address[[toAssign]]()
 		value[[value]]()
 		<store> toAssign.type.suffix
@@ -226,11 +229,11 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	execute[[FuncCall : funcCall -> funcDef param*]]()=
-		value[[(Expression) funcCall]]()
+	execute[[FuncCall : statement -> definition param*]]()=
+		value[[(Expression) statement]]()
 		
-		if ((Expression) funcCall).type.retType != VoidType
-			<pop> ((Expression) funcCall).type.retType.suffix
+		if ((Expression) statement).type != VoidType
+			<pop> ((Expression) statement).type.suffix
 	*/
 	@Override
 	public Object visit(FuncCall node, Object param) {
@@ -245,9 +248,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	execute[[FuncReturn : ret -> exp]](funcDef)=
-		value[[exp]]()
-		<ret> exp.type.numberOfBytes funcDef.varsSize funcDef.type.paramsSize
+	execute[[FuncReturn : statement -> expression]](funcDef)=
+		value[[expression]]()
+		<ret> expression.type.numberOfBytes funcDef.varsSize funcDef.type.paramsSize
 	*/
 	@Override
 	public Object visit(FuncReturn node, Object param) {

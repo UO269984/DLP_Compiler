@@ -21,13 +21,13 @@ public class AddressCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	address[[Variable : expression -> id]]()=
+	address[[Variable : expression -> definition name]]()=
 		if expression.scope == 0
-			<push> expression.definition.offset
+			<push> definition.offset
 		
 		esle
 			<push BP>
-			<push> expression.definition.offset
+			<push> definition.offset
 			<add>
 	*/
 	@Override
@@ -47,8 +47,8 @@ public class AddressCGVisitor extends AbstractCGVisitor {
 	
 	/*
 	address[[ArrayAccess : expression -> array index]]()=
-		address[[expression.array]])()
-		value[[expression.index]])()
+		address[[array]])()
+		value[[index]])()
 		<push> expression.type.numberOfBytes()
 		<mul>
 		<add>
@@ -67,7 +67,7 @@ public class AddressCGVisitor extends AbstractCGVisitor {
 	/*
 	address[[StructAccess : expression -> struct fieldName]]()=
 		address[[struct]])()
-		<push> struct.type.getOffset(fieldName)
+		<push> ((StructType) struct.type).getFieldOffset(fieldName)
 		<add>
 	*/
 	@Override

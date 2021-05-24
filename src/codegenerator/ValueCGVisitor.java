@@ -19,9 +19,9 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	value[[Variable : var -> name]]()=
-		address[[var]]()
-		<load> var.type.suffix
+	value[[Variable : expression -> definition name]]()=
+		address[[expression]]()
+		<load> expression.type.suffix
 	*/
 	public Object visit(Variable node, Object param) {
 		loadExpression(node, param);
@@ -29,13 +29,13 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	value[[Arithmetic : arithmetic -> operand]](operations)=
-		value[[arithmetic.left]]()
-		cg.converTo(arithmetic.right.type, arithmetic.type)
+	value[[Arithmetic : expression -> operand left right]](operations)=
+		value[[left]]()
+		cg.converTo(right.type, expression.type)
 		
-		value[[arithmetic.right]]()
-		cg.converTo(arithmetic.left.type, arithmetic.type)
-		operations.get(operand)(arithmetic.type)
+		value[[right]]()
+		cg.converTo(left.type, expression.type)
+		operations.get(operand)(expression.type)
 	*/
 	@Override
 	public Object visit(Arithmetic node, Object param) {
@@ -50,10 +50,10 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	value[[Comparison : comparison -> operand]](operations)=
-		value[[comparison.left]]()
-		value[[comparison.right]]()
-		operations.get(operand)(comparison.type)
+	value[[Comparison : expression -> operand left right]](operations)=
+		value[[left]]()
+		value[[right]]()
+		operations.get(operand)(expression.type)
 		
 	*/
 	@Override
@@ -65,10 +65,15 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	value[[LogicOperation : logicOp -> operand]]()=
-		value[[logicOp.left]]()
-		value[[logicOp.right]]()
+	value[[LogicOperation : expression -> operand left right]]()=
+		value[[left]]()
+		value[[right]]()
 		
+		if operand == "&&"
+			<and>
+		
+		else if operand == "||"
+			<or>
 	*/
 	@Override
 	public Object visit(LogicOperation node, Object param) {
@@ -91,11 +96,11 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	value[[FuncCall : funcCall -> funcDef param*]]()=
+	value[[FuncCall : expression -> definition param*]]()=
 		for param in param*
 			value[[param]]()
 		
-		<call> funcDef.name
+		<call> definition.name
 	*/
 	@Override
 	public Object visit(FuncCall node, Object param) {
@@ -107,9 +112,9 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	value[[ArrayAccess : arrayAccess -> index]]()=
-		address[[arrayAccess]]()
-		<load> arrayAccess.type.suffix
+	value[[ArrayAccess : expression -> array index]]()=
+		address[[expression]]()
+		<load> expression.type.suffix
 	*/
 	@Override
 	public Object visit(ArrayAccess node, Object param) {
@@ -134,35 +139,36 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	value[[Cast : cast -> castType castExp]]()=
+	value[[Cast : expression -> castType castExp]]()=
 		value[[castExp]]()
-		cg.converTo(castExp.type, castType)
+		cg.converTo(castExp.type, expression.type)
 	*/
 	@Override
 	public Object visit(Cast node, Object param) {
 		node.getExpresion().accept(this, param);
-		this.cg.convertTo(node.getExpresion().getType(), node.getCastType());
+		this.cg.convertTo(node.getExpresion().getType(), node.getType());
 		return param;
 	}
 	
 	/*
-	value[[UnaryMinus : unaryMinus -> expression]]()=
-		<push> unaryMinus.type 0
-		value[[expression]]()
-		<add> unaryMinus.type
+	value[[UnaryMinus : expression -> innerExpression]]()=
+		<push> expression.type 0
+		value[[innerExpression]]()
+		cg.converTo(innerExpression.type, expression.type)
+		<sub> expression.type
 	*/
 	@Override
 	public Object visit(UnaryMinus node, Object param) {
 		this.cg.push(node.getType(), 0);
 		node.getExpresion().accept(this, param);
 		this.cg.convertTo(node.getExpresion().getType(), node.getType());
-		this.cg.add(node.getType());
+		this.cg.sub(node.getType());
 		
 		return param;
 	}
 	
 	/*
-	value[[BoolNot : boolNot -> expression]]()=
+	value[[BoolNot : expression -> expression]]()=
 		value[[expression]]()
 		<not>
 	*/
@@ -182,8 +188,8 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	value[[IntLiteral : intLiteral -> literal]]()=
-		<push> intLiteral.type.suffix literal
+	value[[IntLiteral : expression -> literal]]()=
+		<push> expression.type.suffix literal
 	*/
 	@Override
 	public Object visit(IntLiteral node, Object param) {
@@ -192,8 +198,8 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	value[[CharLiteral : charLiteral -> literal]]()=
-		<push> charLiteral.type.suffix literal
+	value[[CharLiteral : expression -> literal]]()=
+		<push> expression.type.suffix literal
 	*/
 	@Override
 	public Object visit(CharLiteral node, Object param) {
@@ -202,8 +208,8 @@ public class ValueCGVisitor extends AbstractCGVisitor {
 	}
 	
 	/*
-	value[[DoubleLiteral : doubleLiteral -> literal]]()=
-		<push> doubleLiteral.type.suffix literal
+	value[[DoubleLiteral : expression -> literal]]()=
+		<push> expression.type.suffix literal
 	*/
 	@Override
 	public Object visit(DoubleLiteral node, Object param) {
