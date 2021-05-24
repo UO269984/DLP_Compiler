@@ -16,9 +16,9 @@ import codegenerator.CodeGenerator;
 
 public class Main {
 	
-	public static void main(String... args) throws Exception {
-		if (args.length < 1) {
-			System.err.println("Please, pass me the input file.");
+	public static void main(String[] args) throws Exception {
+		if (args.length < 2) {
+			System.err.println("Error - To tun the compiler use:\n\tMain input-file output-file");
 			return;
 		}
 		
@@ -31,14 +31,16 @@ public class Main {
 		PmmParser parser = new PmmParser(tokens);
 		Program ast = parser.program().ast;
 		
+		//Show the AST
+		//IntrospectorModel model = new IntrospectorModel("Program", ast);
+		//new IntrospectorTree("Introspector", model);
+		
 		runVisitor(new IdentificationVisitor(), ast);
 		runVisitor(new TypeCheckingVisitor(), ast);
 		
-		// * Check errors 
-		if (EH.getEH().hasErrors()) {
-			// * Show errors
-			EH.getEH().showErrors(System.err);
-		}
+		//Check errors 
+		if (EH.getEH().hasErrors())
+			EH.getEH().showErrors(System.err); //Show errors
 		
 		else {
 			runVisitor(new OffsetVisitor(), ast);
@@ -46,10 +48,6 @@ public class Main {
 			CodeGenerator codeGenerator = new CodeGenerator(args[1], args[0]);
 			runVisitor(new ExecuteCGVisitor(codeGenerator), ast);
 			codeGenerator.close();
-			
-			// * The AST is shown
-			//IntrospectorModel model = new IntrospectorModel("Program", ast);
-			//new IntrospectorTree("Introspector", model);
 		}
 	}
 	
