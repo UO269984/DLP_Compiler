@@ -127,4 +127,4 @@ fragment
 REAL_EXPONENT: [eE][+\-]?INT_CONSTANT;
 
 REAL_CONSTANT: REAL_NUM(REAL_EXPONENT)?;
-CHAR_CONSTANT: '\''(~[']|('\\'([nt']|INT_CONSTANT)))'\'';
+CHAR_CONSTANT: '\''(~['\\]|('\\'([nt'\\]|INT_CONSTANT)))'\'';

@@ -1,5 +1,6 @@
 package codegenerator;
 
+import ast.types.StructType;
 import ast.types.FuncType;
 import ast.VarDefinition;
 import ast.Statement;
@@ -21,6 +22,14 @@ public class OffsetVisitor extends AbstractVisitor {
 			node.setOffset(this.globalVarOffset);
 			this.globalVarOffset += node.getType().numberOfBytes();
 		}
+		return param;
+	}
+	
+	@Override
+	public Object visit(StructType node, Object param) {
+		super.visit(node, param);
+		
+		node.computeOffsets();
 		return param;
 	}
 	
@@ -53,6 +62,7 @@ public class OffsetVisitor extends AbstractVisitor {
 			offset -= varDef.getType().numberOfBytes();
 			varDef.setOffset(offset);
 		}
+		node.setVarsSize(-offset);
 		
 		for (Statement statement : node.getStatements())
 			statement.accept(this, param);

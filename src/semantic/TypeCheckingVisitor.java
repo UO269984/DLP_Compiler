@@ -2,6 +2,7 @@ package semantic;
 
 import visitor.AbstractVisitor;
 import ast.statements.VarAssigment;
+import ast.statements.Print;
 import ast.statements.Input;
 import ast.statements.IfCond;
 import ast.statements.WhileLoop;
@@ -184,7 +185,19 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 			createLValueError(toAsign);
 		
 		node.getValue().getType().promotesTo(toAsign.getType(), node);
-		return null;
+		return param;
+	}
+	
+	@Override
+	public Object visit(Print node, Object param) {
+		super.visit(node, param);
+		
+		for (Expression exp : node.getExpressions()) {
+			if (! exp.getType().isBuiltInType())
+				new ErrorType(ErrorMSG.getMsg("typeInStatement.notPrinteable", exp.getType()), exp.getLine(), exp.getColumn());
+		}
+		
+		return param;
 	}
 	
 	@Override
@@ -194,9 +207,12 @@ public class TypeCheckingVisitor extends AbstractVisitor {
 		for (Expression exp : node.getExpressions()) {
 			if (! exp.getLValue())
 				createLValueError(exp);
+			
+			else if (! exp.getType().isBuiltInType())
+				new ErrorType(ErrorMSG.getMsg("typeInStatement.notInputable", exp.getType()), exp.getLine(), exp.getColumn());
 		}
 		
-		return null;
+		return param;
 	}
 	
 	@Override

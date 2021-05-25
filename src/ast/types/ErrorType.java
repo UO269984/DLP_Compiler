@@ -25,6 +25,11 @@ public class ErrorType extends AbstractType {
 	}
 	
 	@Override
+	public boolean isBuiltInType() {
+		return true;
+	}
+	
+	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);
 	}

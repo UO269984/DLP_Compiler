@@ -10,6 +10,7 @@ public class LexerHelper {
 		scapedChars.put('n', '\n');
 		scapedChars.put('t', '\t');
 		scapedChars.put('\'', '\'');
+		scapedChars.put('\\', '\\');
 	}
 	
 	public static int lexemeToInt(String str) {

@@ -27,6 +27,10 @@ public class FuncDefinition extends AbstractDefinition {
 		return this.varsSize;
 	}
 	
+	public void setVarsSize(int varsSize) {
+		this.varsSize = varsSize;
+	}
+	
 	public List<Statement> getStatements() {
 		return this.statements;
 	}
@@ -37,7 +41,6 @@ public class FuncDefinition extends AbstractDefinition {
 	
 	public void addVarsDef(List<VarDefinition> varsDef) {
 		this.varDefinitions.addAll(varsDef);
-		this.varsSize += varsDef.stream().mapToInt(def -> def.getType().numberOfBytes()).sum();
 	}
 	
 	@Override

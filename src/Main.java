@@ -31,23 +31,25 @@ public class Main {
 		PmmParser parser = new PmmParser(tokens);
 		Program ast = parser.program().ast;
 		
-		//Show the AST
-		//IntrospectorModel model = new IntrospectorModel("Program", ast);
-		//new IntrospectorTree("Introspector", model);
-		
-		runVisitor(new IdentificationVisitor(), ast);
-		runVisitor(new TypeCheckingVisitor(), ast);
-		
-		//Check errors 
-		if (EH.getEH().hasErrors())
-			EH.getEH().showErrors(System.err); //Show errors
-		
-		else {
-			runVisitor(new OffsetVisitor(), ast);
+		if (parser.getNumberOfSyntaxErrors() == 0) {
+			//Show the AST
+			//IntrospectorModel model = new IntrospectorModel("Program", ast);
+			//new IntrospectorTree("Introspector", model);
 			
-			CodeGenerator codeGenerator = new CodeGenerator(args[1], args[0]);
-			runVisitor(new ExecuteCGVisitor(codeGenerator), ast);
-			codeGenerator.close();
+			runVisitor(new IdentificationVisitor(), ast);
+			runVisitor(new TypeCheckingVisitor(), ast);
+			
+			//Check errors 
+			if (EH.getEH().hasErrors())
+				EH.getEH().showErrors(System.err); //Show errors
+			
+			else {
+				runVisitor(new OffsetVisitor(), ast);
+				
+				CodeGenerator codeGenerator = new CodeGenerator(args[1], args[0]);
+				runVisitor(new ExecuteCGVisitor(codeGenerator), ast);
+				codeGenerator.close();
+			}
 		}
 	}
 	

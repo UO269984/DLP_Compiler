@@ -174,6 +174,9 @@ public class AbstractVisitor implements Visitor {
 	
 	@Override
 	public Object visit(StructType node, Object param) {
+		for (RecordField record : node.getRecordFields())
+			record.getType().accept(this, param);
+		
 		return param;
 	}
 	

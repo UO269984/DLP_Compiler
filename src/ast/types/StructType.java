@@ -17,7 +17,6 @@ public class StructType extends AbstractType {
 	
 	public StructType() {
 		this.fields = new HashMap<String, RecordField>();
-		this.size = 0;
 	}
 	
 	public void addFields(List<VarDefinition> definitions) {
@@ -27,15 +26,26 @@ public class StructType extends AbstractType {
 			if (this.fields.containsKey(name))
 				new ErrorType(ErrorMSG.getMsg("structError.repeatedField", name), def.getLine(), def.getColumn());
 			
-			else {
-				this.fields.put(name, new RecordField(name, def.getType(), this.size));
-				this.size += def.getType().numberOfBytes();
-			}
+			else
+				this.fields.put(name, new RecordField(name, def.getType(), 0));
 		}
 	}
 	
 	public int getFieldOffset(String fieldName) {
 		return this.fields.get(fieldName).getOffset();
+	}
+	
+	public void computeOffsets() {
+		this.size = 0;
+		
+		for (RecordField field : this.fields.values()) {
+			field.setOffset(this.size);
+			this.size += field.getType().numberOfBytes();
+		}
+	}
+	
+	public Iterable<RecordField> getRecordFields() {
+		return this.fields.values();
 	}
 	
 	@Override
